@@ -1,0 +1,5 @@
+/back/.env
+/back/.idea
+/back/vendor
+/back/composer.lock
+.idea

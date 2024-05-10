@@ -1,0 +1,10 @@
+SetEnv PHP_VER 5
+SetEnv REGISTER_GLOBALS 0
+
+Options -Indexes
+Options +FollowSymLinks
+
+
+
+RewriteEngine On
+RewriteRule ^(.*)$ index.php [QSA,L]
