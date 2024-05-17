@@ -21,13 +21,27 @@ code {
 .App {
   text-align: center;
   background-color: $color4;
-  min-height: 100vh;
+  font-size: calc(10px + 2vmin);
+  color: $color0;
+}
+
+.page{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.header {
+  height: 20vh;
+}
+
+.content {
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: $color5;
 }
 
 .load-screen {
@@ -45,10 +59,10 @@ code {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 10vmin;
-  height: 10vmin;
-  margin-top: -5vmin;
-  margin-left: -5vmin;
+  width: 6em;
+  height: 6em;
+  margin-top: -3em;
+  margin-left: -3em;
   pointer-events: none;
 }
 
