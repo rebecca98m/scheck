@@ -1,49 +1,61 @@
-import { useContext, createContext, useState } from "react";
+import {useContext, createContext, useState, useEffect} from "react";
 import {useNavigate, useNavigation} from "react-router-dom";
+import axios, {get} from "axios";
 
 const AuthContext = createContext(1);
 
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({children}) => {
+    const [logged, setLogged] = useState(null);
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem("site") || "");
     const navigate = useNavigate();
-    const loginAction = async (data) => {
-        try {
-            /*const response = await fetch("your-api-endpoint/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-            const res = await response.json();*/
-            let res = {
-                data : {
-                    user: "utente"
-                },
-                token: "abc123"
-            }
-            if (res.data) {
-                setUser(res.data.user);
-                setToken(res.token);
-                localStorage.setItem("site", res.token);
-                navigate("/");
-                return;
-            }
-            throw new Error(res.message);
-        } catch (err) {
-            console.error(err);
-        }
+
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+    const loginAction = (data) => {
+        axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(response => {
+            axios.post("http://api.scheck.test/api/login", data, {
+                withCredentials: true,
+                withXSRFToken: true
+            })
+                .then(loginData => {
+                    setUser(loginData.data.result);
+                    navigate("/")
+                })
+                .catch(err => console.error(err.message));
+        });
     };
     const logOut = () => {
+        //TODO: chiamata logout
         setUser(null);
-        setToken("");
-        localStorage.removeItem("site");
         navigate("/login");
     };
 
+    const getUserData = () => {
+        axios.get("http://api.scheck.test/api/me", {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(loginData=> {
+                if(loginData.data.result == null) {
+                    setLogged(false);
+                    return;
+                }
+                setUser(loginData.data.result);
+                setLogged(true);
+            })
+            .catch(() => setUser(false));
+
+        //TODO: gestire utente non loggato
+    }
+
     return (
-        <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+        <AuthContext.Provider value={{user, logged, loginAction, logOut, getUserData}}>
             {children}
         </AuthContext.Provider>
     );

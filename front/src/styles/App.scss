@@ -34,6 +34,20 @@ code {
 
 .header {
   height: 20vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.horizontal-menu {
+  display: flex;
+  justify-content: space-around;
+  min-width: 15em;
+}
+
+.horizontal-menu a {
+  color: $color0;
+  text-decoration: none;
 }
 
 .content {
