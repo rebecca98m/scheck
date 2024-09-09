@@ -9,44 +9,75 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-color {
+  fill: #5E8C98 !important;
+}
+
+.secondary-color {
+  fill: #CEA249 !important;
+}
+
+.error-color {
+  fill: #6F3A32 !important;
+}
+
 .hidden {
   display: none !important;
 }
 
 .App {
+  background-color: #efeeee;
   text-align: center;
-  background-color: #C8E3DF;
   font-size: calc(10px + 2vmin);
-  color: #051414;
+  color: #3C3F43;
+  height: 100vh;
+  overflow: scroll;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .page {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   justify-content: space-between;
 }
 
 .header {
-  height: 20vh;
+  background-color: #FBFBFB;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 95vh;
+  padding: 2.5vh;
+  width: 20%;
+  flex-direction: column;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
-.horizontal-menu {
+.menu {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  min-width: 15em;
+  align-items: start;
 }
 
-.horizontal-menu a {
-  color: #051414;
+.menu a {
+  color: #3C3F43;
   text-decoration: none;
 }
 
 .content {
-  height: 80vh;
+  min-height: 80vh;
+  margin-left: 1em;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,6 +90,7 @@ code {
   top: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -73,6 +105,10 @@ code {
   margin-top: -3em;
   margin-left: -3em;
   pointer-events: none;
+}
+
+.text-center {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {

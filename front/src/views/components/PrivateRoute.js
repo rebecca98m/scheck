@@ -9,7 +9,7 @@ const PrivateRoute = () => {
     if(logged === null) {
         return <Spinner show={true}/>
     }
-    if (logged) {
+    if (logged === true) {
         endLoad();
         return <Outlet />;
     }

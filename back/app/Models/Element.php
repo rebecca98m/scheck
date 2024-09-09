@@ -28,6 +28,10 @@ class Element extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     /**
      * @return HasMany<ElementValue>
      */

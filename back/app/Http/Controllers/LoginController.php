@@ -6,6 +6,7 @@ use App\Responses\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Exception;
 
 class LoginController extends Controller
 {
@@ -22,5 +23,17 @@ class LoginController extends Controller
         }
 
         return Response::response(NULL, 400, "Credenziali non valide");
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        try {
+            $request->session()->invalidate();
+        }
+        catch (Exception $e) {
+            return Response::response(NULL, 400, $e->getMessage());
+        }
+
+        return Response::response(NULL);
     }
 }

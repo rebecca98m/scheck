@@ -25,15 +25,21 @@ const AuthProvider = ({children}) => {
             })
                 .then(loginData => {
                     setUser(loginData.data.result);
+                    setLogged(true);
                     navigate("/")
                 })
                 .catch(err => console.error(err.message));
         });
     };
     const logOut = () => {
-        //TODO: chiamata logout
-        setUser(null);
-        navigate("/login");
+        axios.post("http://api.scheck.test/api/logout", {}, {
+            withCredentials: true,
+            withXSRFToken: true
+        }).then(r => {
+            setUser(null);
+            setLogged(false);
+            navigate("/login");
+        });
     };
 
     const getUserData = () => {
