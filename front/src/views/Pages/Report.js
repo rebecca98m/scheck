@@ -157,7 +157,7 @@ const Report = () => {
                         <>
                             <Card sx={{margin:2, padding:2, textAlign:'center'}}>
                                 <Typography variant="h6">Impatto</Typography>
-                                <ImpactGauge impact={reportDetails.result.impact} minImpact={reportDetails.result.minimpact} maxImpact={reportDetails.result.maximpact} />
+                                <ImpactGauge impact={reportDetails.result.impact} minImpact={reportDetails.result.min_impact} maxImpact={reportDetails.result.max_impact} />
                             </Card>
 
                             <Card sx={{margin:2, paddingTop:2, textAlign:'center'}}>

@@ -37,7 +37,7 @@ const Reports = () => {
             getReportsFromProject(id);
             getConnectableReports();
         });
-        
+
     };
 
     return (
