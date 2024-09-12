@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $element_id
@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $magnitude
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property float $influence
- * @property float $impact
+ * @property float|null $influence
+ * @property float|null $impact
  * @property-read \App\Models\Element $element
  * @property-read \App\Models\Report|null $report
  * @method static \Illuminate\Database\Eloquent\Builder|ElementValue newModelQuery()

@@ -1,7 +1,7 @@
 import {Gauge, GaugeContainer, GaugeReferenceArc, GaugeValueArc} from "@mui/x-charts/Gauge";
 import React from "react";
 
-const ImpactGauge = ({reportDetails}) => {
+const ImpactGauge = ({impact, minImpact, maxImpact}) => {
 
     const getColor = (value, min, max) => {
         const percentage = (value - min) / (max - min) * 100;
@@ -15,17 +15,17 @@ const ImpactGauge = ({reportDetails}) => {
 
     };
 
-    const color = getColor(reportDetails.result.impact, reportDetails.result.minimpact, reportDetails.result.maximpact);
+    const color = getColor(impact, minImpact, maxImpact);
 
 
     return (
         <Gauge
             cornerRadius="50%"
-            width={150}
-            height={80}
-            valuemin={reportDetails.result.minimpact}
-            valuemax={reportDetails.result.maximpact}
-            value={Number(reportDetails.result.impact.toFixed(2))}
+            width={160}
+            height={100}
+            valuemin={minImpact}
+            valuemax={maxImpact}
+            value={Number(impact.toFixed(2))}
             startAngle={-100}
             endAngle={100}
         >

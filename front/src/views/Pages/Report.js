@@ -6,7 +6,7 @@ import useElement from "../../Controller/Element/ElementController";
 import {
     Card,
     Fab,
-    Paper,
+    Paper, Stack,
     Table,
     TableBody,
     TableCell,
@@ -23,9 +23,11 @@ import ImpactGauge from "../components/ImpactGauge";
 import ImpactPieChart from "../components/ImpactPieChart";
 import TextField from "@mui/material/TextField";
 import DoneIcon from '@mui/icons-material/DoneRounded';
+import useProject from "../../Controller/Project/ProjectController";
 
 const Report = () => {
     const {reportDetails, getReportDetails, editReport, deleteReport} = useReport();
+    const {projects, getAllProjects} = useProject()
     const {id} = useParams();
     const {deleteElementValue} = useElementValue();
     const {elements, getAll} = useElement();
@@ -99,7 +101,12 @@ const Report = () => {
         <>
             {
                 reportDetails && reportDetails.result ?
-                <div className="flex">
+                    <Stack
+                        spacing={{ xs: 1, sm: 2 }}
+                        direction="row"
+                        useFlexGap
+                        sx={{ margin:1, alignItems: "center", justifyContent:'space-between' }}
+                    >
                     {
                         edit ?
                             <>
@@ -118,100 +125,116 @@ const Report = () => {
 
                         :
                             <>
-                                <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.title}</Typography>
-                                <Fab sx={{mr: 1, zIndex: 1 }} size="small"
-                                     onClick={() => handleEditTitle()}><EditIcon/></Fab>
-                                <Fab sx={{mr: 1, zIndex: 1 }} size="small"
-                                     onClick={() => handleDeleteReport()}><DeleteIcon/></Fab>
+                                <Stack direction='row' sx={{alignItems:'center'}}>
+                                    {
+                                        reportDetails.result.project &&
+                                        <Typography variant="h4" sx={{mr:2}}>{reportDetails.result.project.title} - </Typography>
+                                    }
+
+                                    <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.title}</Typography>
+                                </Stack>
+
+                                <div>
+                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
+                                         onClick={() => handleEditTitle()}><EditIcon/></Fab>
+                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
+                                         onClick={() => handleDeleteReport()}><DeleteIcon/></Fab>
+                                </div>
+
                             </>
 
                     }
-                </div>
+                    </Stack>
                 :
                 "caricamento"
             }
+            <Stack spacing={{ xs: 1, sm: 2 }}
+                   direction="row"
+                   useFlexGap
+                   sx={{ margin:1, alignItems: "center", justifyContent:'space-between', flexWrap:'wrap' }}>
+                {
+                    reportDetails && reportDetails.result && reportDetails.result.element_values.length > 0 ?
+                        <>
+                            <Card sx={{margin:2, padding:2, textAlign:'center'}}>
+                                <Typography variant="h6">Impatto</Typography>
+                                <ImpactGauge impact={reportDetails.result.impact} minImpact={reportDetails.result.minimpact} maxImpact={reportDetails.result.maximpact} />
+                            </Card>
 
-            {
-                reportDetails && reportDetails.result && reportDetails.result.element_values.length > 0 ?
-                    <div className="flex">
-                        <Card sx={{margin:2, padding:2}}>
-                            <Typography variant="h6">Impatto</Typography>
-                            <ImpactGauge reportDetails={reportDetails} />
-                        </Card>
+                            <Card sx={{margin:2, paddingTop:2, textAlign:'center'}}>
+                                <Typography variant="h6">Elementi di maggior impatto</Typography>
+                                <ImpactPieChart reportDetails={reportDetails}/>
+                            </Card>
+                        </>
 
-                        <Card sx={{margin:2}}>
-                            <Typography variant="h6">Elementi di maggior impatto</Typography>
-                            <ImpactPieChart reportDetails={reportDetails}/>
-                        </Card>
-                    </div>
+                        :
+                        <></>
+                }
 
-                     :
-                    <></>
-            }
+                <TableContainer sx={{maxWidth: '95%', mb: 2, maxHeight: 800, paddingLeft:2, paddingRight:2, paddingTop:1, paddingBottom:1}} component={Paper}>
+                    <Table size="small" stickyHeader aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell sx={{minWidth:50}}>Nome</TableCell>
+                                <TableCell align="center">Magnitudo</TableCell>
+                                <TableCell align="center">Livello di correlazione</TableCell>
+                                <TableCell align="center">Valore di influenza</TableCell>
+                                <TableCell align="center">Impatto elementare</TableCell>
+                                <TableCell align="center" sx={{minWidth:100}}>Azioni</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
 
-            <TableContainer sx={{maxWidth: 700, mb: 2, maxHeight: 800, paddingLeft:2, paddingRight:2, paddingTop:1, paddingBottom:1}} component={Paper}>
-                <Table size="small" stickyHeader aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell sx={{minWidth:50}}>Nome</TableCell>
-                            <TableCell align="center">Magnitudo</TableCell>
-                            <TableCell align="center">Livello di correlazione</TableCell>
-                            <TableCell align="center">Valore di influenza</TableCell>
-                            <TableCell align="center">Impatto elementare</TableCell>
-                            <TableCell align="center" sx={{minWidth:100}}>Azioni</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-
-                        {
-                            reportDetails && reportDetails.result && reportDetails.result.element_values.length > 0 ?
-
-
-                                reportDetails.result.element_values.map(value => (
-
-                                    (currentElement && currentElement === value.id) ?
-                                        <EditElement elements={showingElements}
-                                                     key={value.id}
-                                                     reportId={id}
-                                                     onCreated={onCreate}
-                                                     element={value}>
-                                        </EditElement> :
-                                        <TableRow
-                                            key={value.id}
-                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {value.element.name}
-                                            </TableCell>
-                                            <TableCell align="center">{value.magnitude}</TableCell>
-                                            <TableCell align="center">{value.correlation_level}</TableCell>
-                                            <TableCell align="center">{value.influence?.toFixed(2)}</TableCell>
-                                            <TableCell align="center">{value.impact?.toFixed(2)}</TableCell>
-                                            <TableCell align="center">
-                                                <Fab sx={{mr: 1, zIndex: 1 }} size="small"
-                                                     onClick={() => handleEditElementValue(value)}><EditIcon/></Fab>
-                                                <Fab sx={{mr: 1, zIndex: 1 }} size="small"
-                                                     onClick={() => handleDeleteElementValue(value.id)}><DeleteIcon/></Fab>
-                                            </TableCell>
-                                        </TableRow>
+                            {
+                                reportDetails && reportDetails.result && reportDetails.result.element_values.length > 0 ?
 
 
-                                ))
+                                    reportDetails.result.element_values.map(value => (
 
-                                :
-                                <TableRow><TableCell colSpan={6} align="center" >Nessun valore da mostrare</TableCell></TableRow>
-                        }
-                        {
-                            currentElement === null &&
-                            <EditElement element={null} elements={showingElements} reportId={id}
-                                         onCreated={() => getReportDetails(id)}></EditElement>
-                        }
+                                        (currentElement && currentElement === value.id) ?
+                                            <EditElement elements={showingElements}
+                                                         key={value.id}
+                                                         reportId={id}
+                                                         onCreated={onCreate}
+                                                         element={value}>
+                                            </EditElement> :
+                                            <TableRow
+                                                key={value.id}
+                                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {value.element.name}
+                                                </TableCell>
+                                                <TableCell align="center">{value.magnitude}</TableCell>
+                                                <TableCell align="center">{value.correlation_level}</TableCell>
+                                                <TableCell align="center">{value.influence?.toFixed(2)}</TableCell>
+                                                <TableCell align="center">{value.impact?.toFixed(2)}</TableCell>
+                                                <TableCell align="center">
+                                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
+                                                         onClick={() => handleEditElementValue(value)}><EditIcon/></Fab>
+                                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
+                                                         onClick={() => handleDeleteElementValue(value.id)}><DeleteIcon/></Fab>
+                                                </TableCell>
+                                            </TableRow>
+
+
+                                    ))
+
+                                    :
+                                    <TableRow><TableCell colSpan={6} align="center" >Nessun valore da mostrare</TableCell></TableRow>
+                            }
+                            {
+                                currentElement === null &&
+                                <EditElement element={null} elements={showingElements} reportId={id}
+                                             onCreated={() => getReportDetails(id)}></EditElement>
+                            }
 
 
 
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Stack>
+
 
         </>
     )

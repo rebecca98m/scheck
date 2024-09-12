@@ -65,7 +65,7 @@ class ElementValueController extends Controller
         /** @var Report $report */
         $report = Report::query()
             ->where('id', $reportId)
-            ->with(['elementValues', 'elementValues.element'])
+            ->with(['elementValues', 'elementValues.element', 'project'])
             ->first();
 
 
@@ -73,16 +73,12 @@ class ElementValueController extends Controller
             if ($report->user_id != \Auth::user()->id) {
                 return Response::response(null, 401, "Non hai accesso a questo elemento!");
             }
-            $minImpact = round($report->elementValues()->sum('influence'));
-            $maxImpact = round($report->elementValues()->sum('influence')*10);
-            $reportImpact = ($report->elementValues()->sum('impact'));
-            return Response::response(
-                [...$report->toArray(), "minimpact"=> $minImpact, "maximpact" => $maxImpact, "impact"=> $reportImpact]
-            );
+
+            return Response::response($report);
         }
 
         return Response::response(null, 404);
-        
+
 
 
     }

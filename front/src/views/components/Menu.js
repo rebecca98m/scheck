@@ -4,6 +4,7 @@ import {Divider, MenuItem, MenuList} from "@mui/material";
 import HomeIcon from '@mui/icons-material/HomeRounded';
 import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import TopicRoundedIcon from '@mui/icons-material/TopicRounded';
 
 
 const Menu = () => {
@@ -23,6 +24,10 @@ const Menu = () => {
                 <MenuItem>
                     <AssessmentRoundedIcon />
                     <Link to="reports">Reports</Link>
+                </MenuItem>
+                <MenuItem>
+                    <TopicRoundedIcon />
+                    <Link to="projects">Progetti</Link>
                 </MenuItem>
             </MenuList>
 

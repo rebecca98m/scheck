@@ -8,16 +8,46 @@ const useReport = () => {
     const [reportDetails, setReportDetails] = useState(null);
     const navigate = useNavigate();
     const newReport = (data) => {
-        axios.post("http://api.scheck.test/api/report/new", data, {
+        return axios.post("http://api.scheck.test/api/report/new", data, {
             withCredentials: true,
             withXSRFToken: true
         }).catch(err => console.error(err.message));
 
     };
 
-    const getAll = () => {
+    const getAll = (page=0) => {
         startLoad();
-        axios.get("http://api.scheck.test/api/report/get", {
+        axios.get("http://api.scheck.test/api/report/get?page=" + page, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(r => setReports(r.data))
+            .catch(err => console.error(err.message))
+            .finally(endLoad);
+    }
+
+    const connect = (idReport, idProject) => {
+        startLoad();
+        const data = {
+            'report_id': idReport,
+            'project_id': idProject,
+        }
+        return axios.post("http://api.scheck.test/api/report/connect", data, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(r => setReports(r.data))
+            .catch(err => console.error(err.message))
+            .finally(endLoad);
+    }
+
+    const disconnect = (idReport, idProject) => {
+        startLoad();
+        const data = {
+            'report_id': idReport,
+            'project_id': idProject,
+        }
+        return axios.post("http://api.scheck.test/api/report/disconnect", data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -63,7 +93,7 @@ const useReport = () => {
             .finally(endLoad);
     }
 
-    return { reports, reportDetails, getAll, getReportDetails, newReport, editReport, deleteReport };
+    return { reports, reportDetails, getAll, connect, disconnect,getReportDetails, newReport, editReport, deleteReport };
 };
 
 export default useReport;

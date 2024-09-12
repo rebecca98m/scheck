@@ -1,5 +1,6 @@
 import {useState} from "react";
 import ReportController from "../../Controller/Report/ReportController";
+import {useNavigate, useNavigation, useParams} from "react-router-dom";
 
 
 const NewReport = () => {
@@ -8,10 +9,15 @@ const NewReport = () => {
         type: "battelle",
     })
     const { newReport } = ReportController();
+    const navigate = useNavigate();
+    const {projectid} = useParams();
     const handleSubmitEvent = (e) => {
         e.preventDefault();
+        input.project_id = projectid;
         if(input.title !=="") {
-            newReport(input);
+            newReport(input).then(() => {
+                navigate("/reports");
+            })
             return;
         }
         alert("Inserisci un titolo valido");

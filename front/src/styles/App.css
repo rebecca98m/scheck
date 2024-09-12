@@ -1,3 +1,57 @@
+.ag-courses-item_link {
+  display: block;
+  padding: 20px 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_text {
+  position: relative;
+  color: #FBFBFB !important;
+  z-index: 1000;
+}
+
+.ag-courses-item_link:hover .connect-button {
+  color: rgba(0, 0, 0, 0.4) !important;
+  background-color: #FBFBFB !important;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_bg {
+  -webkit-transform: scale(10);
+  -ms-transform: scale(10);
+  transform: scale(10);
+}
+
+.ag-courses-item_bg {
+  height: 128px;
+  width: 128px;
+  color: black;
+  z-index: 1;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  border-radius: 50%;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.ag-courses-item_bg_low {
+  background-color: #547348;
+}
+
+.ag-courses-item_bg_medium {
+  background-color: #CEA249;
+}
+
+.ag-courses-item_bg_high {
+  background-color: #6F3A32;
+}
+
+.ag-courses-item_bg_neutral {
+  background-color: #3C3F43;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -9,6 +63,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .flex {
   display: flex;
   align-items: center;
@@ -16,7 +75,7 @@ code {
 }
 
 .primary-color {
-  fill: #5E8C98 !important;
+  fill: #547348 !important;
 }
 
 .secondary-color {
@@ -33,7 +92,6 @@ code {
 
 .App {
   background-color: #efeeee;
-  text-align: center;
   font-size: calc(10px + 2vmin);
   color: #3C3F43;
   height: 100vh;
@@ -80,35 +138,42 @@ code {
   width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .load-screen {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
+  align-self: center;
   height: 100vh;
   z-index: 9999;
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .load-screen-img {
-  background: url("/assets/small-logo-noframe.png");
-  background-size: cover;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6em;
-  height: 6em;
-  margin-top: -3em;
-  margin-left: -3em;
+  top: 50vh;
   pointer-events: none;
 }
 
 .text-center {
   text-align: center;
+}
+
+.button-right {
+  position: absolute !important;
+  bottom: 2em;
+  right: 2em;
+}
+
+.button-right1 {
+  position: absolute;
+  bottom: 4em;
+  right: 3em;
+}
+
+.button-right2 {
+  position: absolute;
+  bottom: 1em;
+  right: 4em;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,0 +1,57 @@
+@import "../variables/colors";
+
+.ag-courses-item_link {
+  display: block;
+  padding: 20px 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_text {
+  position: relative;
+  color: $color5 !important;
+  z-index: 1000;
+}
+
+.ag-courses-item_link:hover .connect-button {
+  color: $color6 !important;
+  background-color: $color5 !important;
+}
+
+
+  .ag-courses-item_link:hover .ag-courses-item_bg {
+    -webkit-transform: scale(10);
+    -ms-transform: scale(10);
+    transform: scale(10);
+  }
+
+  .ag-courses-item_bg {
+    height: 128px;
+    width: 128px;
+    color:black;
+    z-index: 1;
+    position: absolute;
+    top: -75px;
+    right: -75px;
+    border-radius: 50%;
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+  }
+
+  .ag-courses-item_bg_low {
+    background-color: $color1;
+  }
+  .ag-courses-item_bg_medium{
+    background-color: $color3;
+  }
+  .ag-courses-item_bg_high {
+    background-color: $color2;
+  }
+.ag-courses-item_bg_neutral {
+  background-color: $color0;
+}
+
+
+
+

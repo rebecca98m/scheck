@@ -9,6 +9,10 @@ import PrivateRoute from "./views/components/PrivateRoute";
 import User from "./views/Pages/User";
 import NewReport from "./views/Pages/NewReport";
 import Report from "./views/Pages/Report";
+import Projects from "./views/Pages/Projects";
+import NewProject from "./views/Pages/NewProject";
+import Project from "./views/Pages/Project";
+import Connect from "./views/Pages/Connect";
 
 function App() {
 
@@ -21,7 +25,12 @@ function App() {
                     <Route element={<PrivateRoute />}>
                         <Route path="reports" element={<Reports />} />
                         <Route path="reports/new" element={<NewReport />} />
+                        <Route path="reports/new/:projectid" element={<NewReport />} />
                         <Route path="reports/details/:id" element={<Report />}/>
+                        <Route path="projects" element={<Projects />} />
+                        <Route path="projects/new" element={<NewProject />} />
+                        <Route path="projects/details/:id" element={<Project />}/>
+                        <Route path="projects/details/:id/connect" element={<Connect />}/>
                     </Route>
                     <Route path="login" element={<Login />} />
                     <Route path="user" element={<User />} />

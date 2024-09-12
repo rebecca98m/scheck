@@ -3,7 +3,8 @@ import {PieChart} from "@mui/x-charts";
 const ImpactPieChart = ({reportDetails}) => {
     const color = [
        "#3C3F43",
-        "#5E8C98",
+        "#547348",
+        "#44626b",
         "#6F3A32",
         "#CEA249",
         "#BFC7BE"
@@ -17,10 +18,10 @@ const ImpactPieChart = ({reportDetails}) => {
 
     data = data.sort((a,b) => b.value - a.value);
 
-    let otherData = data.slice(4,data.length);
+    let otherData = data.slice(5,data.length);
     if(otherData.length >0) {
         otherData = otherData.reduce((sum, current) => ({"value": sum.value+current.value, "label": "Altri"}), {value: 0, label: "Altri"});
-        data = data.slice(0,4);
+        data = data.slice(0,5);
         data = [...data, otherData];
     }
 
@@ -46,7 +47,7 @@ const ImpactPieChart = ({reportDetails}) => {
                     cy: 150,
                 }
             ]}
-            width={500}
+            width={600}
             height={300}
         />
     );

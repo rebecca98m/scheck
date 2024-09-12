@@ -1,5 +1,6 @@
 @import "./variables/colors.scss";
 @import "./variables/file.scss";
+@import "./components/cards.scss";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,6 +14,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 
@@ -38,7 +44,6 @@ code {
 
 .App {
   background-color: $color4;
-  text-align: center;
   font-size: calc(10px + 2vmin);
   color: $color0;
   height: 100vh;
@@ -85,34 +90,41 @@ code {
   width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .load-screen {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
+  align-self: center;
   height: 100vh;
   z-index: 9999;
-  background-color: $color6;
 }
 
 .load-screen-img {
-  background: url($small-logo-no-frame);
-  background-size: cover;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6em;
-  height: 6em;
-  margin-top: -3em;
-  margin-left: -3em;
+  top: 50vh;
   pointer-events: none;
 }
 .text-center {
   text-align: center;
+}
+
+.button-right {
+  position: absolute !important;
+  bottom: 2em;
+  right: 2em;
+}
+
+.button-right1 {
+  position: absolute;
+  bottom: 4em;
+  right: 3em;
+}
+
+.button-right2 {
+  position: absolute;
+  bottom: 1em;
+  right: 4em;
 }
 
 
