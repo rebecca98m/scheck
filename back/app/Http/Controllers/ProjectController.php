@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\AHPHandler;
+use App\Models\Element;
+use App\Models\ElementValue;
 use App\Models\Project;
 use App\Models\Report;
 use App\Responses\Response;
@@ -127,18 +130,15 @@ class ProjectController extends Controller
 
     }
 
-    public function getProjectResult(Request $request) {
-        $request->validate([
-            'id' => 'required|int|exist:project:id',
-        ]);
+    public function getProjectResult(int $id) {
+
         /** @var Project $project */
         $project = Project::query()
-            ->where('id', $request->id)
+            ->where('id', $id)
             ->with(['reports'])
             ->first();
 
         $malformedReport = [];
-        $missingElements = [];
         $existingElements = [];
 
         if ($project) {
@@ -147,10 +147,73 @@ class ProjectController extends Controller
             }
             /** @var Report $report */
             foreach ($project->reports as $report) {
-                $existingElements[]= $report->elementValues;
+                foreach ($report->elementValues as $elementValue) {
+                    $existingElements[$elementValue->element_id] = $elementValue->element;
+                }
             }
 
-            return Response::response($existingElements);
+            /** @var Report $report */
+            foreach ($project->reports as $report) {
+                $reportElementIds = $report->elementValues->pluck( 'element_id' );
+
+                $missing = collect( $existingElements )
+                    ->filter( fn( Element $value ) => !in_array( $value->id, $reportElementIds->toArray() ) )
+                    ->map(fn(Element $element) => $element->toArray());
+
+                if(count($missing)) {
+                    $malformedReport[] = [...$report->toArray(), "missing" => $missing->values()];
+                }
+            }
+
+            if($malformedReport) {
+                return Response::response(["malformedReport" => $malformedReport], 200, "Malformed projects");
+            }
+
+            $correlationLevels = [];
+            $magnitudes = [];
+
+            foreach ($project->reports as $report) {
+                $reportCorrelationLevels = [];
+                $reportMagnitudes = [];
+                foreach ($report->elementValues as $elementValue) {
+                    $reportCorrelationLevels[$elementValue->element->name] = $elementValue->correlation_level;
+                    $reportMagnitudes[$elementValue->element->name] = $elementValue->magnitude;
+                }
+                ksort($reportCorrelationLevels);
+                ksort($reportMagnitudes);
+                $correlationLevels[] = $reportCorrelationLevels;
+                $magnitudes[] = $reportMagnitudes;
+            }
+            $diff = [];
+
+            foreach ($correlationLevels as $key => $correlationLevel) {
+                if(isset($correlationLevels[$key+1])) {
+                    $diff = [...$diff, ...array_diff_assoc($correlationLevel, $correlationLevels[$key+1])];
+                }
+            }
+
+            if(count($diff)) {
+                return Response::response(["malformedCorrelation" => array_keys($diff)], 200, "Malformed correlation");
+            }
+
+            $matrice_comparazione = AHPHandler::crea_matrice_comparazione(array_values($correlationLevels[0]));
+            $pesi_criteri = AHPHandler::calcola_pesi($matrice_comparazione);
+
+            $dati_normalizzati = AHPHandler::normalizza_dati($magnitudes);
+
+            $punteggio_finale = AHPHandler::calcola_punteggi_finali($dati_normalizzati, $pesi_criteri);
+
+            foreach ($project->reports as $i => $report) {
+                $project->reports[$i]['Impatto'] = $punteggio_finale[$i];
+            }
+
+
+            return Response::response($project);
+
+
+
+
+
         }
 
         return Response::response(null, 404);

@@ -146,6 +146,7 @@ a {
   align-self: center;
   height: 100vh;
   z-index: 9999;
+  top: 0;
 }
 
 .load-screen-img {

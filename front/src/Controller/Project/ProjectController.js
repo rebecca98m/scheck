@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const useProject = () => {
     const [projects, setProjects] = useState(null);
     const [project, setProject] = useState(null);
+    const [projectResult, setProjectResult] = useState(null);
     const [connectableReports, setConnectableReports] = useState(null);
     const navigate = useNavigate();
 
@@ -55,6 +56,21 @@ const useProject = () => {
             .finally(() => endLoad());
     };
 
+    const getProjectResult = (id) => {
+
+        return axios.get(`http://api.scheck.test/api/project/getProjectResult/${id}`, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(r => {
+                setProjectResult(r.data)
+                return r;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
     const editProject = (data) => {
         startLoad();
         return axios.post("http://api.scheck.test/api/project/edit", data, {
@@ -84,7 +100,9 @@ const useProject = () => {
         connectableReports,
         newProject,
         editProject,
-        deleteProject
+        deleteProject,
+        projectResult,
+        getProjectResult
     };
 };
 

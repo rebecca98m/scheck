@@ -23,7 +23,7 @@ const Projects = () => {
                 projects && projects.result && projects.result.length > 0 ?
 
                     projects.result.map(project => (
-                        <ProjectCard project={project} />
+                        <ProjectCard key={project.id} project={project} />
                     ))
 
                      :
