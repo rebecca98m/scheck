@@ -17,7 +17,7 @@ const Projects = () => {
         <>
             <Typography variant="h2">Progetti salvati</Typography>
 
-            <Stack spacing={{ xs: 1, sm: 2 }} direction="column" useFlexGap>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="column">
 
             {
                 projects && projects.result && projects.result.length > 0 ?
@@ -31,9 +31,7 @@ const Projects = () => {
             }
             </Stack>
 
-
-
-            <Link className="button-right" to="/projects/new"><Fab><AddRoundedIcon/></Fab></Link>
+            <Link className="button-right" to="/projects/new"><Fab color="primary"><AddRoundedIcon/></Fab></Link>
         </>
     )
 };

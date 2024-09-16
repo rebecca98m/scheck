@@ -127,4 +127,33 @@ class ProjectController extends Controller
 
     }
 
+    public function getProjectResult(Request $request) {
+        $request->validate([
+            'id' => 'required|int|exist:project:id',
+        ]);
+        /** @var Project $project */
+        $project = Project::query()
+            ->where('id', $request->id)
+            ->with(['reports'])
+            ->first();
+
+        $malformedReport = [];
+        $missingElements = [];
+        $existingElements = [];
+
+        if ($project) {
+            if ($project->user_id != \Auth::user()->id) {
+                return Response::response(null, 401, "Non hai accesso a questo elemento!");
+            }
+            /** @var Report $report */
+            foreach ($project->reports as $report) {
+                $existingElements[]= $report->elementValues;
+            }
+
+            return Response::response($existingElements);
+        }
+
+        return Response::response(null, 404);
+    }
+
 }

@@ -10,6 +10,8 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ReportCard from "../components/ReportCard";
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import CableRoundedIcon from '@mui/icons-material/CableRounded';
+import CalculateRoundedIcon from '@mui/icons-material/CalculateRounded';
+import HoverPopup from "../components/HoverPopup";
 
 
 
@@ -93,6 +95,8 @@ const Reports = () => {
                                 <>
                                     <Typography variant="h3" sx={{mr:2}}>{project.result.title}</Typography>
                                     <div>
+                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"success"}
+                                             onClick={() => handleEditTitle()}><CalculateRoundedIcon/></Fab>
                                         <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
                                              onClick={() => handleEditTitle()}><EditIcon/></Fab>
                                         <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
@@ -121,8 +125,15 @@ const Reports = () => {
 
                     <Fab className="button-right" color={"primary"} onClick={toggleNew}><AddRoundedIcon/></Fab>
                     <div className={openNew}>
-                        <Link className="button-right1" to={"/reports/new/" + project.result.id}><Fab color={"success"} small><EditRoundedIcon /></Fab></Link>
-                        <Link className="button-right2" to={"/projects/details/" + project.result.id + "/connect"}><Fab color={"warning"} small><CableRoundedIcon /></Fab></Link>
+                        <Link className="button-right1" to={"/reports/new/" + project.result.id}>
+                            <Fab color={"success"} small>
+                                <HoverPopup textHover={"Crea nuovo report"} text={<EditRoundedIcon />}/>
+                            </Fab>
+                        </Link>
+                        <Link className="button-right2" to={"/projects/details/" + project.result.id + "/connect"}>
+                            <Fab color={"warning"} small>
+                                <HoverPopup textHover={"Collega report esistente"} text={<CableRoundedIcon />}/>
+                            </Fab></Link>
                     </div>
                 </>
             }

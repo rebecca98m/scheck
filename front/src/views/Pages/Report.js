@@ -12,8 +12,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
-    Typography
+    TableRow,    Typography
 } from "@mui/material";
 import EditElement from "../components/EditElement";
 import EditIcon from '@mui/icons-material/Edit';
