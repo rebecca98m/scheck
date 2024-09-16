@@ -1,3 +1,57 @@
+.ag-courses-item_link {
+  display: block;
+  padding: 20px 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_text {
+  position: relative;
+  color: #FBFBFB !important;
+  z-index: 1000;
+}
+
+.ag-courses-item_link:hover .connect-button {
+  color: rgba(0, 0, 0, 0.4) !important;
+  background-color: #FBFBFB !important;
+}
+
+.ag-courses-item_link:hover .ag-courses-item_bg {
+  -webkit-transform: scale(10);
+  -ms-transform: scale(10);
+  transform: scale(10);
+}
+
+.ag-courses-item_bg {
+  height: 128px;
+  width: 128px;
+  color: black;
+  z-index: 1;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  border-radius: 50%;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.ag-courses-item_bg_low {
+  background-color: #547348;
+}
+
+.ag-courses-item_bg_medium {
+  background-color: #CEA249;
+}
+
+.ag-courses-item_bg_high {
+  background-color: #6F3A32;
+}
+
+.ag-courses-item_bg_neutral {
+  background-color: #3C3F43;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -9,56 +63,118 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.primary-color {
+  fill: #547348 !important;
+}
+
+.secondary-color {
+  fill: #CEA249 !important;
+}
+
+.error-color {
+  fill: #6F3A32 !important;
+}
+
 .hidden {
   display: none !important;
 }
 
 .App {
-  text-align: center;
-  background-color: #C8E3DF;
+  background-color: #efeeee;
   font-size: calc(10px + 2vmin);
-  color: #051414;
+  color: #3C3F43;
+  height: 100vh;
+  overflow: scroll;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .page {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   justify-content: space-between;
 }
 
 .header {
-  height: 20vh;
+  background-color: #FBFBFB;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 95vh;
+  padding: 2.5vh;
+  width: 20%;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+}
+
+.menu a {
+  color: #3C3F43;
+  text-decoration: none;
 }
 
 .content {
-  height: 80vh;
+  min-height: 80vh;
+  margin-left: 1em;
+  width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .load-screen {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
+  align-self: center;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  top: 0;
 }
 
 .load-screen-img {
-  background: url("/assets/small-logo-noframe.png");
-  background-size: cover;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6em;
-  height: 6em;
-  margin-top: -3em;
-  margin-left: -3em;
+  top: 50vh;
   pointer-events: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.button-right {
+  position: absolute !important;
+  bottom: 2em;
+  right: 2em;
+}
+
+.button-right1 {
+  position: absolute;
+  bottom: 4em;
+  right: 3em;
+}
+
+.button-right2 {
+  position: absolute;
+  bottom: 1em;
+  right: 4em;
 }
 
 @media (prefers-reduced-motion: no-preference) {

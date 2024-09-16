@@ -1,22 +1,54 @@
 import { Outlet, Link } from "react-router-dom";
-import logo from "../../img/logo/primary-logo.png";
+import Header from "../components/Header";
+import Spinner from "../components/Spinner";
+import {Divider, ThemeProvider} from "@mui/material";
+
+
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#44626b',
+            contrastText: '#fff',
+        },
+        secondary: {
+            main: '#6F3A32',
+            contrastText: '#fff',
+        },
+        info: {
+            main: '#3C3F43',
+            contrastText: '#fff',
+        },
+        warning: {
+            main: '#CEA249',
+            contrastText: '#fff',
+        },
+        error: {
+            main: '#6F3A32',
+            contrastText: '#fff',
+        },
+        success: {
+            main: '#547348',
+            contrastText: '#fff',
+        }
+    },
+});
 
 const Layout = () => {
     return (
-        <div className="App">
-            <div id="load-screen" className="load-screen hidden">
-                <span className="load-screen-img" />
-            </div>
-            <div className="page">
-                <div className="header">
-                    <img title="logo" src={logo} width={200} alt="scheck"/>
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                <div className="page">
+                    <Header/>
+                    <Divider orientation="vertical" flexItem />
+                    <div className="content">
+                        <Spinner show={false}/>
+                        <Outlet />
+                    </div>
                 </div>
-                <div className="content">
-                    <Outlet />
-                </div>
             </div>
-
-        </div>
+        </ThemeProvider>
     )
 };
 

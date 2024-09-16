@@ -1,0 +1,7 @@
+# Rewrite `http://my_website.com/index.php?foo/bar` to `http://my_website.com/foo/bar'
+&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1 [L,QSA]
+&lt;/IfModule&gt;
