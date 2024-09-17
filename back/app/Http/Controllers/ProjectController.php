@@ -49,18 +49,24 @@ class ProjectController extends Controller
         return Response::response(null, 404);
     }
 
-    public function showAll()
+    public function showAll(Request $request)
     {
+        $page = $request->get("page") ?? 0;
+        $count = $request->get("count") ?? 9;
         return Response::response(
             Project::query()
                 ->where('user_id', \Auth::user()->id)
                 ->with(['reports'])
-                ->get()
+                ->paginate(
+                    perPage: $count,
+                    page: $page)
         );
     }
 
-    public function showAllConnectableReports(int $page=0, int $count=6)
+    public function showAllConnectableReports(Request $request)
     {
+        $page = $request->get("page") ?? 0;
+        $count = $request->get("count") ?? 9;
         return Response::response(
             Report::query()
                 ->where('user_id', \Auth::user()->id)
@@ -209,11 +215,6 @@ class ProjectController extends Controller
 
 
             return Response::response($project);
-
-
-
-
-
         }
 
         return Response::response(null, 404);

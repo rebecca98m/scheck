@@ -23,13 +23,13 @@ const ReportCard = ({ report, connectable, connected, disconnectReport, connectR
 
     return (
         <Stack direction="row" sx={{ alignItems: 'center' }}>
-        <Card sx={{ width: 400, height: 150 }} className="ag-courses_item">
+        <Card sx={{ flexGrow:2, height: 150 }} className="ag-courses_item">
 
             <Link to={'/reports/details/' + report.id} key={report.id}>
                 <div className="ag-courses-item_link">
                     <div className={impactLevel()}></div>
 
-                        <Stack className="ag-courses-item_text" direction="column" sx={{ justifyContent: 'space-between', height: '100px', padding: '1em', paddingTop: 0 }}>
+                        <Stack className="ag-courses-item_text" direction="column" sx={{ justifyContent: 'space-between', height: '100px', padding: 2, paddingTop: 0 }}>
                             {report.project && (
                                 <Typography variant="h6" color="info">{report.project.title}</Typography>
                             )}

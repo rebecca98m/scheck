@@ -60,8 +60,11 @@ class ReportController extends Controller
         return Response::response(null, 404);
     }
 
-    public function showAll(int $page=0, int $count=6)
+    public function showAll(Request $request)
     {
+        $page = $request->get("page") ?? 0;
+        $count = $request->get("count") ?? 9;
+
         return Response::response(
             Report::query()
                 ->where('user_id', \Auth::user()->id)
@@ -72,12 +75,16 @@ class ReportController extends Controller
         );
     }
 
-    public function showAllFromProject(int $projectId)
+    public function showAllFromProject(int $projectId, Request $request)
     {
+        $page = $request->get("page") ?? 0;
+        $count = $request->get("count") ?? 9;
         /** @var Project $project */
         $project = Project::query()
             ->where('id', $projectId)
-            ->with(['reports'])
+            ->with(['reports' => function ($query) use ($count) {
+                $query->paginate($count);
+            }])
             ->first();
 
 
@@ -85,7 +92,8 @@ class ReportController extends Controller
             if ($project->user_id != \Auth::user()->id) {
                 return Response::response(null, 401, "Non hai accesso a questo elemento!");
             }
-            return Response::response($project);
+            $reports = $project->reports()->paginate($count, ['*'], 'page', $page);
+            return Response::response([...$project->toArray(), "reports" => $reports]);
         }
 
         return Response::response(null, 404);

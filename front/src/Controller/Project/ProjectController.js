@@ -17,34 +17,33 @@ const useProject = () => {
         }).catch(err => console.error(err.message));
     };
 
-    const getAllProjects = () => {
+    const getAllProjects = (page=1, count=9) => {
         startLoad();
-        axios.get("http://api.scheck.test/api/project/get", {
+        axios.get(`http://api.scheck.test/api/project/get?page=${page}&count=${count}`, {
             withCredentials: true,
             withXSRFToken: true
         })
-            .then(r => setProjects(r.data))
+            .then(r => setProjects(r.data.result))
             .catch(err => console.error(err.message))
             .finally(() => endLoad());
     };
 
-    const getReportsFromProject = (id, page=1) => {
+    const getReportsFromProject = (id, page=1, count=9) => {
         startLoad();
-        return axios.get(`http://api.scheck.test/api/project/get/${id}?page=${page}`, {
+        return axios.get(`http://api.scheck.test/api/project/get/${id}?page=${page}&count=${count}`, {
             withCredentials: true,
             withXSRFToken: true
         })
-            .then(r => setProject(r.data))
+            .then(r => setProject(r.data.result))
             .catch(err => {
                 console.error(err);
-                //navigate("/projects");
             })
             .finally(() => endLoad());
     };
 
-    const getConnectableReports = (page=1) => {
+    const getConnectableReports = (page=1, count=9) => {
         startLoad();
-        return axios.get(`http://api.scheck.test/api/project/getConnectable?page=${page}`, {
+        return axios.get(`http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}`, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -63,7 +62,7 @@ const useProject = () => {
             withXSRFToken: true
         })
             .then(r => {
-                setProjectResult(r.data)
+                setProjectResult(r.data.result)
                 return r;
             })
             .catch(err => {

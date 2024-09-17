@@ -61,7 +61,7 @@ const ProjectCard = ({ project }) => {
                         >
                             {reports.slice(0, visibleCount).map((report) => (
                                 <Chip
-                                    key={report.title}
+                                    key={report.id}
                                     label={report.title}
                                     variant="outlined"
                                     sx={{ mr: 0.5, mb: 0.5, fontSize: 10, padding: 0 }}
