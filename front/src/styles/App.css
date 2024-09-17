@@ -158,6 +158,17 @@ a {
   text-align: center;
 }
 
+.button {
+  background-color: #3C3F43 !important;
+  color: #FBFBFB !important;
+}
+
+.button:hover {
+  border: 1px solid #3C3F43 !important;
+  background-color: #efeeee !important;
+  color: #3C3F43 !important;
+}
+
 .button-right {
   position: absolute !important;
   bottom: 2em;
