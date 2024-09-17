@@ -1,15 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import {Link} from "react-router-dom";
 import useProject from "../../Controller/Project/ProjectController";
-import {Fab, Stack, Typography} from "@mui/material";
+import {Fab, Pagination, Stack, Typography} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ProjectCard from "../components/ProjectCard";
 
 const Projects = () => {
     const {projects, getAllProjects} = useProject();
 
+    const [itemsPerPage, setItemsPerPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+
     useEffect(() => {
-        getAllProjects();
+        if(itemsPerPage !== null) {
+            getAllProjects(currentPage, itemsPerPage);
+        }
+    }, [currentPage, itemsPerPage]);
+
+    useEffect(() => {
+        const updateItemsPerPage = () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            const reportCardWidth = 400;
+            const reportCardHeight = 300;
+
+            const itemsPerRow = Math.floor(width / reportCardWidth) -1;
+            const itemsPerColumn = Math.floor(height / reportCardHeight) ;
+
+            const newItemsPerPage = itemsPerRow * itemsPerColumn;
+
+            setItemsPerPage(newItemsPerPage);
+        };
+
+        updateItemsPerPage();
+        window.addEventListener('resize', updateItemsPerPage);
+
+        return () => {
+            window.removeEventListener('resize', updateItemsPerPage);
+        };
     }, []);
 
 
@@ -17,12 +46,12 @@ const Projects = () => {
         <>
             <Typography variant="h2">Progetti salvati</Typography>
 
-            <Stack spacing={{ xs: 1, sm: 2 }} direction="column">
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', marginTop:2, marginBottom:1}}>
 
             {
-                projects && projects.result && projects.result.length > 0 ?
+                projects && projects.data && projects.data.length > 0 ?
 
-                    projects.result.map(project => (
+                    projects.data.map(project => (
                         <ProjectCard key={project.id} project={project} />
                     ))
 
@@ -30,6 +59,11 @@ const Projects = () => {
                     <p>Nessun progetto da mostrare</p>
             }
             </Stack>
+            {
+                projects && projects.last_page > 1 &&
+                <Pagination count={projects.last_page} onChange={(event, value) => {setCurrentPage(value)}} sx={{margin: 'auto',
+                    marginTop: '1em'}} />
+            }
 
             <Link className="button-right" to="/projects/new"><Fab color="primary"><AddRoundedIcon/></Fab></Link>
         </>
