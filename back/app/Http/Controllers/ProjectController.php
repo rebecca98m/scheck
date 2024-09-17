@@ -93,7 +93,6 @@ class ProjectController extends Controller
 
     public function delete(Request $request): JsonResponse
     {
-
         $request->validate([
             'id' => 'required|int',
         ]);
@@ -111,6 +110,7 @@ class ProjectController extends Controller
             /** @var Report $report */
             foreach ($project->reports as $report) {
                 $report->project_id = null;
+                $report->save();
             }
             $project->delete();
             return Response::response(null);
@@ -122,7 +122,6 @@ class ProjectController extends Controller
 
     public function deleteWithReports(Request $request): JsonResponse
     {
-
         $request->validate([
             'id' => 'required|int',
         ]);
@@ -130,15 +129,19 @@ class ProjectController extends Controller
         /** @var Project $project */
         $project = Project::query()
             ->where('id', $request->id)
-            ->with(['reports'])
+            ->with(['reports.elementValues'])
             ->first();
 
         if ($project) {
             if ($project->user_id != \Auth::user()->id) {
                 return Response::response(null, 401, "Non hai accesso a questo elemento!");
             }
+
             /** @var Report $report */
             foreach ($project->reports as $report) {
+                foreach ($report->elementValues as $elementValue) {
+                    $elementValue->delete();
+                }
                 $report->delete();
             }
             $project->delete();
@@ -146,8 +149,8 @@ class ProjectController extends Controller
         }
 
         return Response::response(null, 404);
-
     }
+
 
     public function getProjectResult(int $id) {
 
