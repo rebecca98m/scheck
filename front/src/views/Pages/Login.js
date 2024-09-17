@@ -1,20 +1,31 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useAuth} from "../../Controller/Login/AuthProvider";
+import {AlertTitle, Button, Fab, List, ListItem, Stack, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
+import TextField from "@mui/material/TextField";
+import DoneIcon from "@mui/icons-material/DoneRounded";
 
 const Login = () => {
     const [input, setInput] = useState({
         username: "",
         password: "",
     })
+    const [openAlert, setOpenAlert] = useState(false);
+    const [textAlert, setTextAlert] = useState(null);
     const auth = useAuth();
     const handleSubmitEvent = (e) => {
-        e.preventDefault();
-        if((input.mail !=="" ||input.username !== "") && input.password !== "") {
-            auth.loginAction(input);
+        if ((input.mail !== "" || input.username !== "") && input.password !== "") {
+            auth.loginAction(input)
+                .catch(err => {
+                    setTextAlert("Email o password non validi");
+                    setOpenAlert(true);
+                });
             return;
         }
-        alert("Inserisci un nome utente e una password validi");
-    }
+        setTextAlert("Inserisci un nome utente e una password validi");
+        setOpenAlert(true);
+    };
 
     const handleInput = (e) => {
         const {name, value} = e.target;
@@ -25,36 +36,45 @@ const Login = () => {
     };
 
     return (
-        <form onSubmit={handleSubmitEvent}>
-            <div className="form_control">
-                <label htmlFor="user-email">Email:</label>
-                <input
+        <Stack sx={{alignItems:'center', justifyContent:'space-between', height: '90vh', textAlign:'center'}}>
+
+            <Stack>
+                <Typography variant="h3">Bentornato</Typography>
+                <Typography variant="h5">Inserisci mail e password per continuare</Typography>
+            </Stack>
+
+
+            <ErrorAlert openStatus={openAlert}>
+                <AlertTitle>Errore nel login:</AlertTitle>
+                    <Typography variant="body1" >{textAlert}</Typography>
+            </ErrorAlert>
+
+            <Stack spacing={{ xs: 1, sm: 2 }} sx={{width:400, height:400, alignItems:'space-between'}}>
+                <TextField
+                    required
                     type="email"
                     id="user-email"
                     name="email"
-                    placeholder="example@yahoo.com"
-                    aria-describedby="user-email"
-                    aria-invalid="false"
+                    label="Email"
                     onChange={handleInput}
                 />
-                <div id="user-email" className="sr-only">
-                </div>
-            </div>
-            <div className="form_control">
-                <label htmlFor="password">Password:</label>
-                <input
+
+                <TextField
+                    required
                     type="password"
                     id="password"
                     name="password"
-                    aria-describedby="user-password"
-                    aria-invalid="false"
+                    label="Password"
                     onChange={handleInput}
                 />
-                <div id="user-password" className="sr-only">
-                </div>
-            </div>
-            <button className="btn-submit">Submit</button>
-        </form>
+                <Button className="button" sx={{selfAlign:'center'}} onClick={() => handleSubmitEvent()}>Accedi</Button>
+
+                <Typography variant="body1" sx={{textAlign:'center'}}>Non hai ancora un account? <Link to={"/signup"}>Registrati</Link></Typography>
+            </Stack>
+
+
+        </Stack>
+
     );
 };
 

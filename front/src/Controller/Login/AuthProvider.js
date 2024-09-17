@@ -1,6 +1,7 @@
 import {useContext, createContext, useState, useEffect} from "react";
 import {useNavigate, useNavigation} from "react-router-dom";
 import axios, {get} from "axios";
+import {endLoad, startLoad} from "../../utils/utils";
 
 const AuthContext = createContext(1);
 
@@ -14,23 +15,30 @@ const AuthProvider = ({children}) => {
     }, []);
 
     const loginAction = (data) => {
-        axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
+        startLoad();
+        return axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
             withCredentials: true,
             withXSRFToken: true
         })
             .then(response => {
-            axios.post("http://api.scheck.test/api/login", data, {
-                withCredentials: true,
-                withXSRFToken: true
-            })
-                .then(loginData => {
-                    setUser(loginData.data.result);
-                    setLogged(true);
-                    navigate("/")
+                return axios.post("http://api.scheck.test/api/login", data, {
+                    withCredentials: true,
+                    withXSRFToken: true
                 })
-                .catch(err => console.error(err.message));
-        });
+                    .then(loginData => {
+                        setUser(loginData.data.result);
+                        setLogged(true);
+                        navigate("/");
+
+                        return loginData;
+                    });
+            })
+            .catch(err => {
+                throw err;
+            })
+            .finally(endLoad);
     };
+
     const logOut = () => {
         axios.post("http://api.scheck.test/api/logout", {}, {
             withCredentials: true,
