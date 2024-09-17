@@ -44,7 +44,7 @@ const Login = () => {
             </Stack>
 
 
-            <ErrorAlert openStatus={openAlert}>
+            <ErrorAlert openAlert={openAlert} setOpenAlert={setOpenAlert}>
                 <AlertTitle>Errore nel login:</AlertTitle>
                     <Typography variant="body1" >{textAlert}</Typography>
             </ErrorAlert>

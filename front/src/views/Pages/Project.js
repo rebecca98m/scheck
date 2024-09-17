@@ -113,7 +113,7 @@ const Reports = () => {
     return (
         <>
 
-            <ErrorAlert openStatus={openAlert}>
+            <ErrorAlert openAlert={openAlert} setOpenAlert={setOpenAlert}>
                 <AlertTitle>Errori nei report:</AlertTitle>
 
                 {

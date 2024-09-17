@@ -13,6 +13,7 @@ import Projects from "./views/Pages/Projects";
 import NewProject from "./views/Pages/NewProject";
 import Project from "./views/Pages/Project";
 import Connect from "./views/Pages/Connect";
+import Signup from "./views/Pages/Signup"
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
                         <Route path="projects/details/:id/connect" element={<Connect />}/>
                     </Route>
                     <Route path="login" element={<Login />} />
+                    <Route path="signup" element={<Signup />} />
                     <Route path="user" element={<User />} />
                     <Route path="*" element={<NoPage />} />
                 </Route>

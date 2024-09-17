@@ -6,30 +6,25 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import {useEffect} from "react";
 
-export default function ErrorAlert({openStatus, children}) {
-    const [open, setOpen] = React.useState(openStatus);
-
-    useEffect(() => {
-        setOpen(openStatus)
-    }, [openStatus]);
+export default function ErrorAlert({openAlert, setOpenAlert, children}) {
 
     return (
-        <Box sx={{ width: '98%' }}>
-            <Collapse in={open}>
+        <Box sx={{ textAlign:'start' }}>
+            <Collapse in={openAlert}>
                 <Alert severity="error" variant="filled"
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}
-                        >
-                            <CloseIcon fontSize="inherit" />
-                        </IconButton>
-                    }
-                    sx={{ mb: 2 }}
+                       action={
+                           <IconButton
+                               aria-label="close"
+                               color="inherit"
+                               size="small"
+                               onClick={() => {
+                                   setOpenAlert(false);
+                               }}
+                           >
+                               <CloseIcon fontSize="inherit" />
+                           </IconButton>
+                       }
+                       sx={{ mb: 2 }}
                 >
                     {children}
                 </Alert>
