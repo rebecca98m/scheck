@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import {Link} from "react-router-dom";
 import useReport from "../../Controller/Report/ReportController";
-import {Fab, Pagination, Stack, Typography} from "@mui/material";
+import {Fab, InputAdornment, Pagination, Stack, Typography} from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ReportCard from "../components/ReportCard";
+import TextField from "@mui/material/TextField";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const Reports = () => {
     const {reports, getAll} = useReport();
 
     const [itemsPerPage, setItemsPerPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState(null);
 
     useEffect(() => {
         if(itemsPerPage !== null) {
-            getAll(currentPage, itemsPerPage);
+            getAll(currentPage, itemsPerPage, searchText);
         }
-    }, [currentPage, itemsPerPage]);
+    }, [currentPage, itemsPerPage, searchText]);
 
     useEffect(() => {
         const updateItemsPerPage = () => {
@@ -41,11 +44,32 @@ const Reports = () => {
         };
     }, []);
 
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+    }
+
 
     return (
         <>
-            <Typography variant="h2" sx={{mb:2}}>Report salvati</Typography>
+            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
+                <Typography variant="h2">Report salvati</Typography>
+                <TextField
+                    sx={{width:300}}
+                    type="text"
+                    id="search-text"
+                    name="search-text"
+                    label="Cerca"
+                    onChange={handleSearch}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchRoundedIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
 
+            </Stack>
                 {
 
                     reports && reports.result && reports.result.data.length > 0 ?

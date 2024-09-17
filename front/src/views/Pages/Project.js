@@ -2,7 +2,19 @@ import React, { useState, useEffect } from 'react'
 import {Link, useNavigate, useParams} from "react-router-dom";
 import useProject from "../../Controller/Project/ProjectController";
 import TextField from "@mui/material/TextField";
-import {AlertTitle, Card, Divider, Fab, Grid2, List, ListItem, Pagination, Stack, Typography} from "@mui/material";
+import {
+    AlertTitle,
+    Card,
+    Divider,
+    Fab,
+    Grid2,
+    InputAdornment,
+    List,
+    ListItem,
+    Pagination,
+    Stack,
+    Typography
+} from "@mui/material";
 import DoneIcon from "@mui/icons-material/DoneRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,6 +28,7 @@ import ErrorAlert from "../components/ErrorAlert";
 import BarChartProject from "../components/BarChartProject";
 import ProjectRank from "../components/ProjectRank";
 import {endLoad, startLoad} from "../../utils/utils";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 
 
@@ -29,14 +42,15 @@ const Reports = () => {
     const [openAlert, setOpenAlert] = useState(false)
     const [itemsPerPage, setItemsPerPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState(null);
 
     useEffect(() => {
 
         if(itemsPerPage !== null) {
-            getReportsFromProject(id, currentPage, itemsPerPage);
+            getReportsFromProject(id, currentPage, itemsPerPage, searchText);
         }
 
-    }, [currentPage, itemsPerPage]);
+    }, [currentPage, itemsPerPage, searchText]);
 
     useEffect(() => {
         const updateItemsPerPage = () => {
@@ -69,6 +83,10 @@ const Reports = () => {
             [name]:value,
         }));
     };
+
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+    }
 
     function toggleNew() {
         if (openNew==='hidden') setOpenNew('');
@@ -218,6 +236,24 @@ const Reports = () => {
                     }
 
 
+                    <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
+                        <Typography variant="h4">Report collegati</Typography>
+                        <TextField
+                            sx={{width:300}}
+                            type="text"
+                            id="search-text"
+                            name="search-text"
+                            label="Cerca"
+                            onChange={handleSearch}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchRoundedIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Stack>
                     <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', marginTop:2, marginBottom:1}}>
                     {
 

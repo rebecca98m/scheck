@@ -64,6 +64,19 @@ class ReportController extends Controller
     {
         $page = $request->get("page") ?? 0;
         $count = $request->get("count") ?? 9;
+        $text = $request->get("text") ?? null;
+
+        if($text !== null) {
+            return Response::response(
+                Report::query()
+                    ->where('user_id', \Auth::user()->id)
+                    ->where('title', 'like', '%' . $text . '%')
+                    ->with(['project'])
+                    ->paginate(
+                        perPage: $count,
+                        page: $page)
+            );
+        }
 
         return Response::response(
             Report::query()
@@ -77,27 +90,31 @@ class ReportController extends Controller
 
     public function showAllFromProject(int $projectId, Request $request)
     {
-        $page = $request->get("page") ?? 0;
+        $page = $request->get("page") ?? 1;
         $count = $request->get("count") ?? 9;
-        /** @var Project $project */
+        $text = $request->get("text") ?? null;
+
         $project = Project::query()
             ->where('id', $projectId)
-            ->with(['reports' => function ($query) use ($count) {
-                $query->paginate($count);
-            }])
+            ->where('user_id', \Auth::user()->id)
             ->first();
 
+        if ($project) {
+            $query = $project->reports();
 
-        if($project) {
-            if ($project->user_id != \Auth::user()->id) {
-                return Response::response(null, 401, "Non hai accesso a questo elemento!");
+            if ($text !== null) {
+                $query->where('title', 'like', "%{$text}%");
             }
-            $reports = $project->reports()->paginate($count, ['*'], 'page', $page);
-            return Response::response([...$project->toArray(), "reports" => $reports]);
+
+            $reports = $query->paginate($count, ['*'], 'page', $page);
+
+            return Response::response([...$project->toArray(), 'reports' => $reports]);
         }
 
-        return Response::response(null, 404);
+        return Response::response(null, 404, "Progetto non trovato o non hai accesso.");
     }
+
+
 
     public function connectToProject(Request $request) {
         $values = $request->validate([

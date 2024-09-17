@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::post('/register', [SignupController::class, 'register']);
 Route::get('/me', [UserController::class, 'getUserInfo']);
 
 Route::get( 'report/get/{reportId}', [ElementValueController::class, 'showAllFromReport'])->middleware('auth:sanctum');
-Route::post( 'report/new', [ReportController::class, 'create'])->middleware('auth:sanctum');
 Route::get( 'report/get', [ReportController::class, 'showAll'])->middleware('auth:sanctum');
+Route::post( 'report/new', [ReportController::class, 'create'])->middleware('auth:sanctum');
 Route::post( 'report/connect', [ReportController::class, 'connectToProject'])->middleware('auth:sanctum');
 Route::post( 'report/disconnect', [ReportController::class, 'disconnectFromProject'])->middleware('auth:sanctum');
 Route::post( 'report/edit', [ReportController::class, 'update'])->middleware('auth:sanctum');

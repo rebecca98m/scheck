@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {useAuth} from "../../Controller/Login/AuthProvider";
-import {AlertTitle, Button, Fab, List, ListItem, Stack, Typography} from "@mui/material";
+import {AlertTitle, Button, Stack, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert";
 import TextField from "@mui/material/TextField";
-import DoneIcon from "@mui/icons-material/DoneRounded";
+
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -49,6 +49,7 @@ const Login = () => {
                     <Typography variant="body1" >{textAlert}</Typography>
             </ErrorAlert>
 
+
             <Stack spacing={{ xs: 1, sm: 2 }} sx={{width:400, height:400, alignItems:'space-between'}}>
                 <TextField
                     required
@@ -71,6 +72,9 @@ const Login = () => {
 
                 <Typography variant="body1" sx={{textAlign:'center'}}>Non hai ancora un account? <Link to={"/signup"}>Registrati</Link></Typography>
             </Stack>
+
+
+
 
 
         </Stack>
