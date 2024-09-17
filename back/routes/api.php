@@ -31,6 +31,7 @@ Route::get( 'project/getConnectable', [ProjectController::class, 'showAllConnect
 Route::get( 'project/getProjectResult/{id}', [ProjectController::class, 'getProjectResult'])->middleware('auth:sanctum');
 Route::post( 'project/edit', [ProjectController::class, 'update'])->middleware('auth:sanctum');
 Route::post( 'project/delete', [ProjectController::class, 'delete'])->middleware('auth:sanctum');
+Route::post( 'project/deletereports', [ProjectController::class, 'deleteWithReports'])->middleware('auth:sanctum');
 
 Route::get( 'element/get', [ElementController::class, 'showAll'])->middleware('auth:sanctum');
 Route::post( 'element/new', [ElementController::class, 'create'])->middleware('auth:sanctum');

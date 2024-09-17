@@ -29,11 +29,12 @@ import BarChartProject from "../components/BarChartProject";
 import ProjectRank from "../components/ProjectRank";
 import {endLoad, startLoad} from "../../utils/utils";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import DeleteDialog from "../components/DeleteDialog";
 
 
 
 const Reports = () => {
-    const {project, getReportsFromProject, editProject, deleteProject, projectResult, getProjectResult } = useProject();
+    const {project, getReportsFromProject, editProject, deleteProject, deleteProjectWithReports, projectResult, getProjectResult } = useProject();
     const {id} = useParams();
     const [edit, setEdit] = useState(false);
     const [input, setInput] = useState(false);
@@ -43,6 +44,7 @@ const Reports = () => {
     const [itemsPerPage, setItemsPerPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState(null);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     useEffect(() => {
 
@@ -107,11 +109,24 @@ const Reports = () => {
         setEdit(true);
     }
 
+    function handleDeleteDialog() {
+        setOpenDeleteDialog(true);
+    }
+
     function handleDeleteProject() {
         const data = {
             'id' : id
         };
         deleteProject(data).then(() => {
+            navigate("/projects");
+        })
+    }
+
+    function handleDeleteProjectWithReports() {
+        const data = {
+            'id' : id
+        };
+        deleteProjectWithReports(data).then(() => {
             navigate("/projects");
         })
     }
@@ -130,6 +145,7 @@ const Reports = () => {
 
     return (
         <>
+            <DeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} deleteProject={handleDeleteProject} deleteProjectWithReports={handleDeleteProjectWithReports} />
 
             <ErrorAlert openAlert={openAlert} setOpenAlert={setOpenAlert}>
                 <AlertTitle>Errori nei report:</AlertTitle>
@@ -205,7 +221,7 @@ const Reports = () => {
                                         <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
                                              onClick={() => handleEditTitle()}><EditIcon/></Fab>
                                         <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
-                                             onClick={() => handleDeleteProject()}><DeleteIcon/></Fab>
+                                             onClick={() => handleDeleteDialog()}><DeleteIcon/></Fab>
                                     </div>
 
                                 </>

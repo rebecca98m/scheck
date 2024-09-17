@@ -96,6 +96,16 @@ const useProject = () => {
             .finally(() => endLoad());
     };
 
+    const deleteProjectWithReports = (data) => {
+        startLoad();
+        return axios.post("http://api.scheck.test/api/project/deletereports", data, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .catch(err => console.error(err.message))
+            .finally(() => endLoad());
+    };
+
     return {
         project,
         projects,
@@ -106,6 +116,7 @@ const useProject = () => {
         newProject,
         editProject,
         deleteProject,
+        deleteProjectWithReports,
         projectResult,
         getProjectResult
     };
