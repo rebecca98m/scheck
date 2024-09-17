@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import {Link} from "react-router-dom";
 import useProject from "../../Controller/Project/ProjectController";
-import {Fab, Pagination, Stack, Typography} from "@mui/material";
+import {Fab, InputAdornment, Pagination, Stack, Typography} from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ProjectCard from "../components/ProjectCard";
+import TextField from "@mui/material/TextField";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const Projects = () => {
     const {projects, getAllProjects} = useProject();
 
     const [itemsPerPage, setItemsPerPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState(null);
 
     useEffect(() => {
         if(itemsPerPage !== null) {
-            getAllProjects(currentPage, itemsPerPage);
+            getAllProjects(currentPage, itemsPerPage, searchText);
         }
-    }, [currentPage, itemsPerPage]);
+    }, [currentPage, itemsPerPage, searchText]);
 
     useEffect(() => {
         const updateItemsPerPage = () => {
@@ -41,10 +44,32 @@ const Projects = () => {
         };
     }, []);
 
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+    }
+
 
     return (
         <>
-            <Typography variant="h2">Progetti salvati</Typography>
+            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
+                <Typography variant="h2">Progetti salvati</Typography>
+                <TextField
+                    sx={{width:300}}
+                    type="text"
+                    id="search-text"
+                    name="search-text"
+                    label="Cerca"
+                    onChange={handleSearch}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchRoundedIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+
+            </Stack>
 
             <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', marginTop:2, marginBottom:1}}>
 

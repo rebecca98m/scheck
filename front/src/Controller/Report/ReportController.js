@@ -15,9 +15,12 @@ const useReport = () => {
 
     };
 
-    const getAll = (page=0, count=9) => {
+    const getAll = (page=0, count=9, text=null) => {
         startLoad();
-        axios.get(`http://api.scheck.test/api/report/get?page=${page}&count=${count}`, {
+        let url = text === null ?
+            `http://api.scheck.test/api/report/get?page=${page}&count=${count}` :
+            `http://api.scheck.test/api/report/get?page=${page}&count=${count}&text=${text}`;
+        axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
         })

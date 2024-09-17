@@ -53,6 +53,19 @@ class ProjectController extends Controller
     {
         $page = $request->get("page") ?? 0;
         $count = $request->get("count") ?? 9;
+        $text = $request->get("text") ?? null;
+
+        if($text !== null) {
+            return Response::response(
+                Project::query()
+                    ->where('user_id', \Auth::user()->id)
+                    ->where('title', 'like', '%' . $text . '%')
+                    ->with(['reports'])
+                    ->paginate(
+                        perPage: $count,
+                        page: $page)
+            );
+        }
         return Response::response(
             Project::query()
                 ->where('user_id', \Auth::user()->id)
