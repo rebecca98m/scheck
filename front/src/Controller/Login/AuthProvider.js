@@ -68,8 +68,40 @@ const AuthProvider = ({children}) => {
         //TODO: gestire utente non loggato
     }
 
+    const signup = (data) => {
+        startLoad();
+        return axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(response => {
+                return axios.post("http://api.scheck.test/api/register", data, {
+                    withCredentials: true,
+                    withXSRFToken: true
+                })
+                    .then(loginData => {
+                        setUser(loginData.data.result);
+                        setLogged(true);
+                        navigate("/");
+
+                        return loginData;
+                    })
+                    .catch(err => {
+                        if (err.response && err.response.data && err.response.data.errors) {
+                            throw err.response.data.errors;
+                        }
+                        throw err;
+                    });
+            })
+            .catch(err => {
+                throw err;
+            })
+            .finally(endLoad);
+    };
+
+
     return (
-        <AuthContext.Provider value={{user, logged, loginAction, logOut, getUserData}}>
+        <AuthContext.Provider value={{user, logged, loginAction, logOut, getUserData, signup}}>
             {children}
         </AuthContext.Provider>
     );
