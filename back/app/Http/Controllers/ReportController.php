@@ -7,6 +7,7 @@ use App\Models\ElementValue;
 use App\Models\Project;
 use App\Models\Report;
 use App\Responses\Response;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -66,26 +67,16 @@ class ReportController extends Controller
         $count = $request->get("count") ?? 9;
         $text = $request->get("text") ?? null;
 
-        if($text !== null) {
-            return Response::response(
-                Report::query()
-                    ->where('user_id', \Auth::user()->id)
-                    ->where('title', 'like', '%' . $text . '%')
-                    ->with(['project'])
-                    ->paginate(
-                        perPage: $count,
-                        page: $page)
-            );
-        }
-
         return Response::response(
             Report::query()
                 ->where('user_id', \Auth::user()->id)
+                ->when($text, fn( Builder $query, $text ) => $query->where('title', 'like', '%' . $text . '%') )
                 ->with(['project'])
                 ->paginate(
                     perPage: $count,
                     page: $page)
         );
+
     }
 
     public function showAllFromProject(int $projectId, Request $request)
