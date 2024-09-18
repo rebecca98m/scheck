@@ -1,9 +1,6 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import { Card, Fab, Stack, Typography } from "@mui/material";
-import CableRoundedIcon from "@mui/icons-material/CableRounded";
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import useReport from "../../Controller/Report/ReportController";
+import { Card, Button, Stack, Typography } from "@mui/material";
 
 const ReportCard = ({ report, connectable, connected, disconnectReport, connectReport }) => {
     const getLevel = (value, min, max) => {
@@ -21,15 +18,26 @@ const ReportCard = ({ report, connectable, connected, disconnectReport, connectR
     const updatedDate = useCallback(() => new Date(report.updated_at), [report]);
     const impactLevel = useCallback(() => getLevel(report.impact, report.min_impact, report.max_impact), [report]);
 
+    const [stackStyle, setStackStyle] = useState({});
+    const [linkStyle, setLinkStyle] = useState({});
+
+    useEffect(() => {
+        if (connected || connectable) {
+            setStackStyle({ alignItems: 'center', width: 400 });
+            setLinkStyle({ padding: '20px 20px 0px 20px' });
+        } else {
+            setStackStyle({ alignItems: 'center' });
+        }
+    }, [connected, connectable]);
+
     return (
-        <Stack direction="row" sx={{ alignItems: 'center' }}>
-        <Card sx={{ flexGrow:2, height: 150 }} className="ag-courses_item">
+        <Stack direction="column" sx={stackStyle}>
+            <Card sx={{ flexGrow: 1 }} className="ag-courses_item">
+                <Link to={'/reports/details/' + report.id} key={report.id}>
+                    <div className="ag-courses-item_link" style={linkStyle}>
+                        <div className={impactLevel()}></div>
 
-            <Link to={'/reports/details/' + report.id} key={report.id}>
-                <div className="ag-courses-item_link">
-                    <div className={impactLevel()}></div>
-
-                        <Stack className="ag-courses-item_text" direction="column" sx={{ justifyContent: 'space-between', height: '100px', padding: 2, paddingTop: 0 }}>
+                        <Stack className="ag-courses-item_text" direction="column" sx={{ justifyContent: 'space-between'}}>
                             {report.project && (
                                 <Typography variant="h6" color="info">{report.project.title}</Typography>
                             )}
@@ -41,18 +49,19 @@ const ReportCard = ({ report, connectable, connected, disconnectReport, connectR
                     </Stack>
                 </div>
             </Link>
-        </Card>
             {connectable && (
-                <Fab sx={{ml:2}} onClick={connectReport} className="connect-button" color={"success"} size="small">
-                    <CableRoundedIcon />
-                </Fab>
+                <Button className={'card-button'} sx={{width:400}} onClick={connectReport}  color={"success"}>
+                    Connetti
+                </Button>
             )}
 
             {connected && (
-                <Fab sx={{ml:2}} onClick={disconnectReport} className="connect-button" color={"error"} size="small">
-                    <RemoveRoundedIcon />
-                </Fab>
+                <Button className={'card-button'} sx={{width:400}} onClick={disconnectReport}  color={"error"}>
+                    Disconnetti
+                </Button>
             )}
+        </Card>
+
         </Stack>
     );
 };

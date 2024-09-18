@@ -70,10 +70,12 @@ class ProjectController extends Controller
     {
         $page = $request->get("page") ?? 0;
         $count = $request->get("count") ?? 9;
+        $text = $request->get("text") ?? null;
         return Response::response(
             Report::query()
                 ->where('user_id', \Auth::user()->id)
                 ->where('project_id', NULL)
+                ->when($text, fn( Builder $query, $text ) => $query->where('title', 'like', '%' . $text . '%') )
                 ->with(['project'])
                 ->paginate(
                     perPage: $count,

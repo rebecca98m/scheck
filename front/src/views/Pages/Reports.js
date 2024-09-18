@@ -89,7 +89,9 @@ const Reports = () => {
 
                         </>
                          :
-                        <p>Nessun report da mostrare</p>
+                        <Stack sx={{minHeight:800, marginTop:10}}>
+                            <Typography variant="h5">Nessun report da mostrare</Typography>
+                        </Stack>
                 }
 
             <Link className="button-right" to="/reports/new"><Fab color="primary"><AddRoundedIcon/></Fab></Link>

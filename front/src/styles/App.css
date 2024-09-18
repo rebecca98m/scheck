@@ -52,6 +52,10 @@
   background-color: #3C3F43;
 }
 
+.card-button:hover {
+  background-color: #efeeee !important;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -95,9 +99,8 @@ a {
   font-size: calc(10px + 2vmin);
   color: #3C3F43;
   height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 .page {
@@ -133,11 +136,14 @@ a {
 
 .content {
   min-height: 80vh;
+  max-height: 100vh;
+  overflow-y: scroll;
   margin-left: 1em;
   width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-right: 0.2em;
 }
 
 .load-screen {

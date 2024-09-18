@@ -81,7 +81,9 @@ const Projects = () => {
                     ))
 
                      :
-                    <p>Nessun progetto da mostrare</p>
+                    <Stack sx={{minHeight:800, marginTop:10}}>
+                        <Typography variant="h5">Nessun progetto da mostrare</Typography>
+                    </Stack>
             }
             </Stack>
             {

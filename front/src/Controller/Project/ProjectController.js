@@ -47,13 +47,16 @@ const useProject = () => {
             .finally(() => endLoad());
     };
 
-    const getConnectableReports = (page=1, count=9) => {
+    const getConnectableReports = (page=1, count=9, text=null) => {
         startLoad();
-        return axios.get(`http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}`, {
+        let url = text === null ?
+            `http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}` :
+            `http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}&text=${text}`;
+        return axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
         })
-            .then(r => setConnectableReports(r.data))
+            .then(r => setConnectableReports(r.data.result))
             .catch(err => {
                 console.error(err);
                 navigate("/project");

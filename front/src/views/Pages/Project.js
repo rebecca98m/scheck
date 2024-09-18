@@ -279,7 +279,9 @@ const Reports = () => {
                             ))
 
                              :
-                            <p>Nessun report da mostrare</p>
+                            <Stack sx={{minHeight:800, marginTop:10}}>
+                                <Typography variant="h5">Nessun report da mostrare</Typography>
+                            </Stack>
 
 
                     }

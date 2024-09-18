@@ -47,9 +47,8 @@ a {
   font-size: calc(10px + 2vmin);
   color: $color0;
   height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 .page{
@@ -85,11 +84,14 @@ a {
 
 .content {
   min-height: 80vh;
+  max-height: 100vh;
+  overflow-y: scroll;
   margin-left: 1em;
   width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-right: 0.2em;
 }
 
 .load-screen {
