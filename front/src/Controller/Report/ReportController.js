@@ -31,6 +31,7 @@ const useReport = () => {
     }
 
     const getLastReport = () => {
+        startLoad();
         axios.get(`http://api.scheck.test/api/report/getlast`, {
             withCredentials: true,
             withXSRFToken: true

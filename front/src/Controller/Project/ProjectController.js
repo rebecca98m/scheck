@@ -33,6 +33,7 @@ const useProject = () => {
     };
 
     const getLastProject = () => {
+        startLoad();
         axios.get(`http://api.scheck.test/api/project/getlast`, {
             withCredentials: true,
             withXSRFToken: true

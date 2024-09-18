@@ -19,11 +19,14 @@ const Home = () => {
 
     return (
         <>
-            <Typography variant="h3" className={"page-title"}>Benvenuto {user ? user.name : ''}</Typography>
+            <Stack className={"page-title"}>
+                <Typography variant="h3">Benvenuto {user ? user.name : ''}</Typography>
+            </Stack>
 
-            <Stack direction="row" sx={{ justifyContent: 'center'}}>
 
-                <Stack direction="column" sx={{justifyContent: 'center'}}>
+            <Stack direction="row" sx={{ justifyContent: 'center', mt:10}}>
+
+                <Stack direction="column" sx={{alignItems: 'center', justifyContent: 'space-between'}}>
                     <Typography variant="h4" sx={{ mt: 3, mb:2 }}>Ultimo report modificato</Typography>
 
                     {lastReport ? (
@@ -33,12 +36,12 @@ const Home = () => {
                             <Typography variant="h5">Nessun report da mostrare</Typography>
                         </Stack>
                     )}
-                    <Typography variant="body1"><Link to={"/reports"}>Vai a tutti i report</Link></Typography>
+                    <Typography variant="body1" sx={{ mt: 2 }}><Link to={"/reports"}>Vai a tutti i report</Link></Typography>
                 </Stack>
 
                 <Divider variant="middle" orientation="vertical" sx={{m:8}} />
 
-                <Stack direction="column" sx={{alignItems: 'center'}}>
+                <Stack direction="column" sx={{alignItems: 'center', justifyContent: 'space-between'}}>
                     <Typography variant="h4" sx={{ mt: 3, mb:2 }}>Ultimo progetto modificato</Typography>
 
                     {lastProject ? (
@@ -49,7 +52,7 @@ const Home = () => {
                         </Stack>
 
                     )}
-                    <Typography variant="body1"><Link to={"/projects"}>Vai a tutti i progetti</Link></Typography>
+                    <Typography variant="body1" sx={{ mt: 2 }}><Link to={"/projects"}>Vai a tutti i progetti</Link></Typography>
                 </Stack>
             </Stack>
         </>

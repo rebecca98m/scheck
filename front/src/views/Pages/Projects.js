@@ -77,7 +77,7 @@ const Projects = () => {
 
             </Stack>
 
-            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', marginTop:2, marginBottom:1}}>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', alignItems:'center', justifyContent:'center'}}>
 
             {
                 projects && projects.data && projects.data.length > 0 ?

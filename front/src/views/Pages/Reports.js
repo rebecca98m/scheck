@@ -76,29 +76,26 @@ const Reports = () => {
                 />
 
             </Stack>
+
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', alignItems:'center', justifyContent:'center'}}>
                 {
-
                     reports && reports.result && reports.result.data.length > 0 ?
-                        <>
-                            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap sx={{flexWrap: 'wrap', width:'100%', marginTop:2, marginBottom:1}}>
-                                {
-                                    reports.result.data.map(report => (
-                                        <ReportCard key={report.id} report={report}></ReportCard>
-                                    ))}
 
-                            </Stack>
-                            {
-                                reports.result.last_page > 1 &&
-                                <Pagination count={reports.result.last_page} onChange={(event, value) => {setCurrentPage(value)}} sx={{margin: 'auto',
-                                    marginTop: '1em'}} />
-                            }
-
-                        </>
-                         :
+                        reports.result.data.map(report => (
+                            <ReportCard key={report.id} report={report}></ReportCard>
+                        ))
+                        :
                         <Stack sx={{minHeight:800, marginTop:10}}>
                             <Typography variant="h5">Nessun report da mostrare</Typography>
                         </Stack>
                 }
+
+            </Stack>
+            {
+                reports && reports.result && reports.result.last_page > 1 &&
+                <Pagination count={reports.result.last_page} onChange={(event, value) => {setCurrentPage(value)}} sx={{margin: 'auto',
+                    marginTop: '1em'}} />
+            }
 
             <Link className="button-right" to="/reports/new"><Fab color="primary"><AddRoundedIcon/></Fab></Link>
         </>
