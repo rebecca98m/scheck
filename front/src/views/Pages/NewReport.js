@@ -16,7 +16,13 @@ const NewReport = () => {
         input.project_id = projectid;
         if(input.title !=="") {
             newReport(input).then(() => {
-                navigate("/reports");
+                if(projectid !== undefined) {
+                    navigate("/projects/details/" + projectid);
+                }
+                else {
+                    navigate("/reports");
+                }
+
             })
             return;
         }
