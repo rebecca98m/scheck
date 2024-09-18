@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const useProject = () => {
     const [projects, setProjects] = useState(null);
     const [project, setProject] = useState(null);
+    const [lastProject, setLastProject] = useState(null);
     const [projectResult, setProjectResult] = useState(null);
     const [connectableReports, setConnectableReports] = useState(null);
     const navigate = useNavigate();
@@ -30,6 +31,16 @@ const useProject = () => {
             .catch(err => console.error(err.message))
             .finally(() => endLoad());
     };
+
+    const getLastProject = () => {
+        axios.get(`http://api.scheck.test/api/project/getlast`, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(r => setLastProject(r.data.result))
+            .catch(err => console.error(err.message))
+            .finally(endLoad);
+    }
 
     const getReportsFromProject = (id, page=1, count=9, text=null) => {
         startLoad();
@@ -121,7 +132,9 @@ const useProject = () => {
         deleteProject,
         deleteProjectWithReports,
         projectResult,
-        getProjectResult
+        getProjectResult,
+        lastProject,
+        getLastProject
     };
 };
 
