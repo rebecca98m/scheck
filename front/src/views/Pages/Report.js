@@ -77,7 +77,7 @@ const Report = () => {
             'id' : id
         };
         deleteReport(data).then(() => {
-            navigate("/reports");
+            navigate(-1);
         })
     }
 
