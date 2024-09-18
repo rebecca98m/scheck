@@ -23,6 +23,7 @@ import ImpactPieChart from "../components/ImpactPieChart";
 import TextField from "@mui/material/TextField";
 import DoneIcon from '@mui/icons-material/DoneRounded';
 import useProject from "../../Controller/Project/ProjectController";
+import Back from "../components/Back";
 
 const Report = () => {
     const {reportDetails, getReportDetails, editReport, deleteReport} = useReport();
@@ -125,9 +126,10 @@ const Report = () => {
                         :
                             <>
                                 <Stack direction='row' sx={{alignItems:'center'}}>
+                                    <Back />
                                     {
                                         reportDetails.result.project &&
-                                        <Typography variant="h4" sx={{mr:2}}>{reportDetails.result.project.title} - </Typography>
+                                        <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.project.title} - </Typography>
                                     }
 
                                     <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.title}</Typography>
