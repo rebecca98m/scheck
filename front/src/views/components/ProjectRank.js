@@ -38,7 +38,7 @@ export default function ProjectRank({ reports }) {
                             <EmojiEventsRoundedIcon/>
                         </Avatar>
                         <Typography variant="h6">
-                            {rank[0].label} - {rank[0].value}
+                            {rank[0].label}
                         </Typography>
                     </ListItem>
                     <Divider/>
@@ -47,7 +47,7 @@ export default function ProjectRank({ reports }) {
                             2
                         </Avatar>
                         <Typography variant="body1">
-                            {rank[1].label} - {rank[1].value}
+                            {rank[1].label}
                         </Typography>
                     </ListItem>
                     <Divider/>
@@ -56,7 +56,7 @@ export default function ProjectRank({ reports }) {
                             3
                         </Avatar>
                         <Typography variant="body2">
-                            {rank[2].label} - {rank[2].value}
+                            {rank[2].label}
                         </Typography>
                     </ListItem>
 
