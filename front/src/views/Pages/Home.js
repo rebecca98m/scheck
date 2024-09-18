@@ -19,7 +19,7 @@ const Home = () => {
 
     return (
         <>
-            <Typography variant="h2">Benvenuto {user ? user.name : ''}</Typography>
+            <Typography variant="h3" className={"page-title"}>Benvenuto {user ? user.name : ''}</Typography>
 
             <Stack direction="row" sx={{ justifyContent: 'center'}}>
 

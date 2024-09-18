@@ -17,7 +17,6 @@ class ReportController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|string',
             'project_id' => 'int|exists:projects,id'
         ]);
 
@@ -32,7 +31,6 @@ class ReportController extends Controller
         $report = Report::create([
             'user_id' => \Auth::user()->id,
             'title' => $request->title,
-            'type' => $request->type,
             'project_id' =>$request->project_id
         ]);
 

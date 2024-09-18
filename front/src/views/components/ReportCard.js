@@ -27,6 +27,7 @@ const ReportCard = ({ report, connectable, connected, disconnectReport, connectR
             setLinkStyle({ padding: '20px 20px 0px 20px' });
         } else {
             setStackStyle({ alignItems: 'center' });
+            setLinkStyle({ height:'100%' });
         }
     }, [connected, connectable]);
 
@@ -39,28 +40,28 @@ const ReportCard = ({ report, connectable, connected, disconnectReport, connectR
 
                         <Stack className="ag-courses-item_text" direction="column" sx={{ justifyContent: 'space-between'}}>
                             {report.project && (
-                                <Typography variant="h6" color="info">{report.project.title}</Typography>
+                                <Typography className={"card-project-title"} variant="h6" color="info">{report.project.title}</Typography>
                             )}
                             <Typography variant="h5">{report.title}</Typography>
                             <Stack>
                                 <Typography variant="caption">Data creazione: {createdDate().toLocaleString('it-IT')}</Typography>
                                 <Typography variant="caption">Data ultima modifica: {updatedDate().toLocaleString('it-IT')}</Typography>
                             </Stack>
-                    </Stack>
-                </div>
-            </Link>
-            {connectable && (
-                <Button className={'card-button'} sx={{width:400}} onClick={connectReport}  color={"success"}>
-                    Connetti
-                </Button>
-            )}
+                        </Stack>
+                    </div>
+                </Link>
+                {connectable && (
+                    <Button className={'card-button'} sx={{width:400}} onClick={connectReport}  color={"success"}>
+                        Connetti
+                    </Button>
+                )}
 
-            {connected && (
-                <Button className={'card-button'} sx={{width:400}} onClick={disconnectReport}  color={"error"}>
-                    Disconnetti
-                </Button>
-            )}
-        </Card>
+                {connected && (
+                    <Button className={'card-button'} sx={{width:400}} onClick={disconnectReport}  color={"error"}>
+                        Disconnetti
+                    </Button>
+                )}
+            </Card>
 
         </Stack>
     );

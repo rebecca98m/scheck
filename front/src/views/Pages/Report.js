@@ -124,25 +124,24 @@ const Report = () => {
                             </>
 
                         :
-                            <>
-                                <Stack direction='row' sx={{alignItems:'center'}}>
-                                    <Back />
-                                    {
-                                        reportDetails.result.project &&
-                                        <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.project.title} - </Typography>
-                                    }
+                                <Stack direction='row' sx={{alignItems:'center', justifyContent: 'space-between', width:'100%'}} className={"page-title"}>
+                                    <Stack direction='row' sx={{alignItems:'center'}}>
+                                        <Back />
+                                        {
+                                            reportDetails.result.project &&
+                                            <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.project.title} - </Typography>
+                                        }
 
-                                    <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.title}</Typography>
+                                        <Typography variant="h3" sx={{mr:2}}>{reportDetails.result.title}</Typography>
+                                    </Stack>
+
+                                    <Stack direction='row'>
+                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
+                                             onClick={() => handleEditTitle()}><EditIcon/></Fab>
+                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
+                                             onClick={() => handleDeleteReport()}><DeleteIcon/></Fab>
+                                    </Stack>
                                 </Stack>
-
-                                <div>
-                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
-                                         onClick={() => handleEditTitle()}><EditIcon/></Fab>
-                                    <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
-                                         onClick={() => handleDeleteReport()}><DeleteIcon/></Fab>
-                                </div>
-
-                            </>
 
                     }
                     </Stack>

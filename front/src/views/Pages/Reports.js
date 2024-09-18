@@ -57,8 +57,8 @@ const Reports = () => {
 
     return (
         <>
-            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
-                <Typography variant="h2">Report salvati</Typography>
+            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}} className={"page-title"}>
+                <Typography variant="h3">Report salvati</Typography>
                 <TextField
                     sx={{width:300}}
                     type="text"

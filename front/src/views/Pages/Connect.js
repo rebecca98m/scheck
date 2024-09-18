@@ -102,9 +102,9 @@ const Reports = () => {
     return (
         <>
             <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
-                <Stack direction={"row"} sx={{alignItems:'center'}}>
+                <Stack direction={"row"} sx={{alignItems:'center'}} className={"page-title"}>
                     <Back/>
-                    <Typography variant="h2">Gestisci progetto</Typography>
+                    <Typography variant="h3">Gestisci progetto</Typography>
                 </Stack>
 
                 <TextField

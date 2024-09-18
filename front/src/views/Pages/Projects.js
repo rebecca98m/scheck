@@ -57,8 +57,8 @@ const Projects = () => {
 
     return (
         <>
-            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
-                <Typography variant="h2">Progetti salvati</Typography>
+            <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}} className={"page-title"}>
+                <Typography variant="h3">Progetti salvati</Typography>
                 <TextField
                     sx={{width:300}}
                     type="text"

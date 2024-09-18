@@ -33,30 +33,30 @@ export default function ProjectRank({ reports }) {
             {
                 rank && rank.length > 0 &&
                 <List>
-                    <ListItem key={rank[0].id}>
+                    <ListItem key={rank[0]?.id}>
                         <Avatar sx={{mr:2, ml:-1, width: 64, height: 64 }}>
                             <EmojiEventsRoundedIcon/>
                         </Avatar>
                         <Typography variant="h6">
-                            {rank[0].label}
+                            {rank[0]?.label}
                         </Typography>
                     </ListItem>
                     <Divider/>
-                    <ListItem key={rank[1].id}>
+                    <ListItem key={rank[1]?.id}>
                         <Avatar sx={{mr:4}}>
                             2
                         </Avatar>
                         <Typography variant="body1">
-                            {rank[1].label}
+                            {rank[1]?.label}
                         </Typography>
                     </ListItem>
                     <Divider/>
-                    <ListItem key={rank[2].id}>
+                    <ListItem key={rank[2]?.id}>
                         <Avatar sx={{mr:4}}>
                             3
                         </Avatar>
                         <Typography variant="body2">
-                            {rank[2].label}
+                            {rank[2]?.label}
                         </Typography>
                     </ListItem>
 

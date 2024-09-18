@@ -17,33 +17,34 @@
   color: $color5 !important;
 }
 
-
+.ag-courses-item_link:hover .card-project-title {
+  color: $color4 !important;
+}
 
 .ag-courses-item_link:hover .connect-button {
   color: $color6 !important;
   background-color: $color5 !important;
 }
 
+.ag-courses-item_link:hover .ag-courses-item_bg {
+  -webkit-transform: scale(10);
+  -ms-transform: scale(10);
+  transform: scale(10);
+}
 
-  .ag-courses-item_link:hover .ag-courses-item_bg {
-    -webkit-transform: scale(10);
-    -ms-transform: scale(10);
-    transform: scale(10);
-  }
-
-  .ag-courses-item_bg {
-    height: 128px;
-    width: 128px;
-    color:black;
-    z-index: 1;
-    position: absolute;
-    top: -75px;
-    right: -75px;
-    border-radius: 50%;
-    -webkit-transition: all .5s ease;
-    -o-transition: all .5s ease;
-    transition: all .5s ease;
-  }
+.ag-courses-item_bg {
+  height: 128px;
+  width: 128px;
+  color:black;
+  z-index: 1;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  border-radius: 50%;
+  -webkit-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  transition: all .5s ease;
+}
 
   .ag-courses-item_bg_low {
     background-color: $color1;

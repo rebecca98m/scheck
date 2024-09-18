@@ -45,6 +45,7 @@ const Reports = () => {
     const [searchText, setSearchText] = useState(null);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openNewReportDialog, setOpenNewReportDialog] = useState(false);
+    const [textAlert, setTextAlert] = useState(false);
 
     useEffect(() => {
 
@@ -61,6 +62,10 @@ const Reports = () => {
         }
 
     }, [searchText]);
+
+    useEffect(() => {
+        setTextAlert("");
+    }, [project]);
 
     useEffect(() => {
         const updateItemsPerPage = () => {
@@ -146,15 +151,24 @@ const Reports = () => {
     }
 
     function handleProjectResult() {
-        startLoad();
-        getProjectResult(id).then(
-            (r) => {
-                if (r.data.error === "Malformed projects" || r.data.error === "Malformed correlation") {
-                    setOpenAlert(true);
+        if(project.reports.data && project.reports.data.length > 0) {
+            startLoad();
+            getProjectResult(id).then(
+                (r) => {
+                    console.log(r);
+                    if (r.data.error === "Malformed projects" || r.data.error === "Malformed correlation") {
+                        setOpenAlert(true);
+                    }
                 }
-            }
 
-        ).finally(endLoad);
+            ).finally(endLoad);
+        }
+        else {
+            setTextAlert("Non ci sono report in questo progetto. Aggiungi dei report per poterne calcolare l'impatto.")
+            setOpenAlert(true);
+        }
+
+
     }
 
     return (
@@ -227,6 +241,8 @@ const Reports = () => {
                             </List>
                         </Typography>
                 }
+
+                {textAlert}
             </ErrorAlert>
 
             {
@@ -256,19 +272,23 @@ const Reports = () => {
 
                                 :
                                 <>
-                                    <Stack direction='row' sx={{alignItems:'center'}}>
-                                        <Back to={"/projects"}/>
-                                        <Typography variant="h3" sx={{mr:2}}>{project.title}</Typography>
+                                    <Stack direction='row' sx={{alignItems:'center', justifyContent:'space-between', width:'100%'}} className={"page-title"}>
+                                        <Stack direction='row' sx={{alignItems:'center'}}>
+                                            <Back to={"/projects"}/>
+                                            <Typography variant="h3" sx={{mr:2}}>{project.title}</Typography>
+                                        </Stack>
+
+                                        <Stack direction='row'>
+                                            <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"success"}
+                                                 onClick={() => handleProjectResult()}><CalculateRoundedIcon/></Fab>
+                                            <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
+                                                 onClick={() => handleEditTitle()}><EditIcon/></Fab>
+                                            <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
+                                                 onClick={() => handleDeleteDialog()}><DeleteIcon/></Fab>
+                                        </Stack>
                                     </Stack>
 
-                                    <div>
-                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"success"}
-                                             onClick={() => handleProjectResult()}><CalculateRoundedIcon/></Fab>
-                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"warning"}
-                                             onClick={() => handleEditTitle()}><EditIcon/></Fab>
-                                        <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"error"}
-                                             onClick={() => handleDeleteDialog()}><DeleteIcon/></Fab>
-                                    </div>
+
 
                                 </>
 

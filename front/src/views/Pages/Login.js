@@ -39,7 +39,7 @@ const Login = () => {
         <Stack sx={{alignItems:'center', justifyContent:'space-between', height: '90vh', textAlign:'center'}}>
 
             <Stack>
-                <Typography variant="h3">Bentornato</Typography>
+                <Typography variant="h3" className={"page-title"}>Bentornato</Typography>
                 <Typography variant="h5">Inserisci mail e password per continuare</Typography>
             </Stack>
 
