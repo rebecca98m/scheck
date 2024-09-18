@@ -25,7 +25,7 @@ const ProjectCard = ({ project }) => {
                 const marginBottom = parseFloat(childStyle.marginBottom) || 0;
                 totalWidth += child.offsetWidth + marginRight + marginBottom;
 
-                if (totalWidth > container.offsetWidth*2+100) {
+                if (totalWidth > container.offsetWidth*2) {
                     maxVisible = index;
                     break;
                 }
@@ -57,10 +57,18 @@ const ProjectCard = ({ project }) => {
                         <Stack
                             direction="row"
                             ref={containerRef}
-                            sx={{ flexWrap: 'wrap', overflow: 'hidden', height: 110, justifyContent:'center', alignItems:'center' }}
+                            sx={{
+                                flexWrap: 'wrap',
+                                overflow: 'hidden',
+                                height: 'auto',
+                                maxHeight: 110,
+                                justifyContent:'center',
+                                alignItems:'center'
+                            }}
                         >
                             {reports.slice(0, visibleCount).map((report) => (
                                 <Chip
+                                    className={"card-chip"}
                                     key={report.id}
                                     label={report.title}
                                     variant="outlined"
@@ -69,6 +77,7 @@ const ProjectCard = ({ project }) => {
                             ))}
                             {visibleCount < reports.length && (
                                 <Chip
+                                    className={"card-chip"}
                                     label={`altri ${reports.length - visibleCount}`}
                                     variant="outlined"
                                     sx={{ mr: 0.5, mb: 0.5, fontSize: 10, padding: 0 }}

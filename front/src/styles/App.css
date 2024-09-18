@@ -11,6 +11,10 @@
   z-index: 1000;
 }
 
+.ag-courses-item_link:hover .card-chip {
+  color: #FBFBFB !important;
+}
+
 .ag-courses-item_link:hover .connect-button {
   color: rgba(0, 0, 0, 0.4) !important;
   background-color: #FBFBFB !important;

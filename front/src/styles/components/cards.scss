@@ -13,6 +13,12 @@
   z-index: 1000;
 }
 
+.ag-courses-item_link:hover .card-chip {
+  color: $color5 !important;
+}
+
+
+
 .ag-courses-item_link:hover .connect-button {
   color: $color6 !important;
   background-color: $color5 !important;
@@ -55,6 +61,8 @@
 .card-button:hover {
   background-color: $color4 !important;
 }
+
+
 
 
 
