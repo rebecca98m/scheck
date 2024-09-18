@@ -8,6 +8,7 @@ import CableRoundedIcon from "@mui/icons-material/CableRounded";
 import useProject from "../../Controller/Project/ProjectController";
 import TextField from "@mui/material/TextField";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
 const Reports = () => {
     const { connectableReports, project, getConnectableReports, getReportsFromProject } = useProject();
@@ -25,7 +26,17 @@ const Reports = () => {
             getConnectableReports(currentPageConnectable, itemsPerPage, searchText);
         }
 
-    }, [id, itemsPerPage, searchText]);
+    }, [id, itemsPerPage]);
+
+    useEffect(() => {
+        if(itemsPerPage !== null) {
+            setCurrentPageConnectable(1);
+            setCurrentPageConnected(1);
+            getReportsFromProject(id, currentPageConnected, itemsPerPage, searchText);
+            getConnectableReports(currentPageConnected, itemsPerPage, searchText);
+        }
+
+    }, [searchText]);
 
     useEffect(() => {
         if(itemsPerPage !== null) {
@@ -36,7 +47,7 @@ const Reports = () => {
 
     useEffect(() => {
         if(itemsPerPage !== null) {
-            getConnectableReports(id, currentPageConnectable, itemsPerPage, searchText);
+            getConnectableReports(currentPageConnectable, itemsPerPage, searchText);
         }
 
     }, [currentPageConnectable]);
@@ -68,15 +79,19 @@ const Reports = () => {
 
     const connectReport = (reportId) => {
         connect(reportId, id).then(() => {
-            getReportsFromProject(id);
-            getConnectableReports();
+            if(itemsPerPage !== null) {
+                getReportsFromProject(id, currentPageConnected, itemsPerPage, searchText);
+                getConnectableReports(currentPageConnectable, itemsPerPage, searchText);
+            }
         });
     };
 
     const disconnectReport = (reportId) => {
         disconnect(reportId, id).then(() => {
-            getReportsFromProject(id);
-            getConnectableReports();
+            if(itemsPerPage !== null) {
+                getReportsFromProject(id, currentPageConnected, itemsPerPage, searchText);
+                getConnectableReports(currentPageConnectable, itemsPerPage, searchText);
+            }
         });
 
     };
@@ -88,7 +103,11 @@ const Reports = () => {
     return (
         <>
             <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
-                <Typography variant="h2">Gestisci progetto</Typography>
+                <Stack direction={"row"} sx={{alignItems:'center'}}>
+                    <Link to={"/projects/details/" + id}><ArrowBackRoundedIcon sx={{mr:2}}></ArrowBackRoundedIcon></Link>
+                    <Typography variant="h2">Gestisci progetto</Typography>
+                </Stack>
+
                 <TextField
                     sx={{width:300}}
                     type="text"
