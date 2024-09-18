@@ -9,6 +9,7 @@ import useProject from "../../Controller/Project/ProjectController";
 import TextField from "@mui/material/TextField";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import Back from "../components/Back";
 
 const Reports = () => {
     const { connectableReports, project, getConnectableReports, getReportsFromProject } = useProject();
@@ -102,7 +103,7 @@ const Reports = () => {
         <>
             <Stack direction={"row"} sx={{alignItems:'center', justifyContent:'space-between', mr:2, mt:2}}>
                 <Stack direction={"row"} sx={{alignItems:'center'}}>
-                    <Link to={"/projects/details/" + id}><ArrowBackRoundedIcon sx={{mr:2}}></ArrowBackRoundedIcon></Link>
+                    <Back/>
                     <Typography variant="h2">Gestisci progetto</Typography>
                 </Stack>
 

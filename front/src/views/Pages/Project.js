@@ -30,6 +30,7 @@ import ProjectRank from "../components/ProjectRank";
 import {endLoad, startLoad} from "../../utils/utils";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import TwoActionsDialog from "../components/TwoActionsDialog";
+import Back from "../components/Back";
 
 const Reports = () => {
     const {project, getReportsFromProject, editProject, deleteProject, deleteProjectWithReports, projectResult, getProjectResult } = useProject();
@@ -255,7 +256,11 @@ const Reports = () => {
 
                                 :
                                 <>
-                                    <Typography variant="h3" sx={{mr:2}}>{project.title}</Typography>
+                                    <Stack direction='row' sx={{alignItems:'center'}}>
+                                        <Back to={"/projects"}/>
+                                        <Typography variant="h3" sx={{mr:2}}>{project.title}</Typography>
+                                    </Stack>
+
                                     <div>
                                         <Fab sx={{mr: 1, zIndex: 1 }} size="small" color={"success"}
                                              onClick={() => handleProjectResult()}><CalculateRoundedIcon/></Fab>
