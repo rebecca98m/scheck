@@ -29,9 +29,7 @@ import BarChartProject from "../components/BarChartProject";
 import ProjectRank from "../components/ProjectRank";
 import {endLoad, startLoad} from "../../utils/utils";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import DeleteDialog from "../components/DeleteDialog";
-
-
+import TwoActionsDialog from "../components/TwoActionsDialog";
 
 const Reports = () => {
     const {project, getReportsFromProject, editProject, deleteProject, deleteProjectWithReports, projectResult, getProjectResult } = useProject();
@@ -45,6 +43,7 @@ const Reports = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState(null);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [openNewReportDialog, setOpenNewReportDialog] = useState(false);
 
     useEffect(() => {
 
@@ -89,11 +88,6 @@ const Reports = () => {
     const handleSearch = (e) => {
         setSearchText(e.target.value);
     }
-
-    function toggleNew() {
-        if (openNew==='hidden') setOpenNew('');
-        else setOpenNew('hidden');
-    }
     function submitEditTitle() {
         const data = {
             'id' : id,
@@ -111,6 +105,17 @@ const Reports = () => {
 
     function handleDeleteDialog() {
         setOpenDeleteDialog(true);
+    }
+    function handleNewReportDialog() {
+        setOpenNewReportDialog(true);
+    }
+
+    function goToNewReport() {
+        navigate("/reports/new/" + id);
+    }
+
+    function goToConnect() {
+        navigate("/projects/details/" + id + "/connect");
     }
 
     function handleDeleteProject() {
@@ -145,7 +150,35 @@ const Reports = () => {
 
     return (
         <>
-            <DeleteDialog open={openDeleteDialog} setOpen={setOpenDeleteDialog} deleteProject={handleDeleteProject} deleteProjectWithReports={handleDeleteProjectWithReports} />
+            <TwoActionsDialog
+                open={openDeleteDialog}
+                setOpen={setOpenDeleteDialog}
+                title={"Elimina progetto"}
+                description={"Attenzione, stai per eliminare un progetto. Desideri rimuovere anche gli eventuali report collegati ad esso o preferisci mantenerli?"}
+                action1={{
+                    action: handleDeleteProject,
+                    text: "Mantieni i report collegati"
+                }}
+                action2={{
+                    action: handleDeleteProjectWithReports,
+                    text: "Rimuovi anche i report collegati"
+                }}
+            />
+
+            <TwoActionsDialog
+                open={openNewReportDialog}
+                setOpen={setOpenNewReportDialog}
+                title={"Aggiungi report"}
+                description={"Desideri creare un nuovo report o collegare al progetto un report esistente?"}
+                action1={{
+                    action: goToNewReport,
+                    text: "Crea un nuovo report"
+                }}
+                action2={{
+                    action: goToConnect,
+                    text: "Collega un report esistente"
+                }}
+            />
 
             <ErrorAlert openAlert={openAlert} setOpenAlert={setOpenAlert}>
                 <AlertTitle>Errori nei report:</AlertTitle>
@@ -294,18 +327,7 @@ const Reports = () => {
                     }
 
 
-                    <Fab className="button-right" color={"primary"} onClick={toggleNew}><AddRoundedIcon/></Fab>
-                    <div className={openNew}>
-                        <Link className="button-right1" to={"/reports/new/" + project.id}>
-                            <Fab color={"success"} size="small">
-                                <HoverPopup textHover={"Crea nuovo report"} text={<EditRoundedIcon />}/>
-                            </Fab>
-                        </Link>
-                        <Link className="button-right2" to={"/projects/details/" + project.id + "/connect"}>
-                            <Fab color={"warning"} size="small">
-                                <HoverPopup textHover={"Collega report esistente"} text={<CableRoundedIcon />}/>
-                            </Fab></Link>
-                    </div>
+                    <Fab className="button-right" color={"primary"} onClick={handleNewReportDialog}><AddRoundedIcon/></Fab>
                 </>
             }
         </>

@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function DeleteDialog({open, setOpen, deleteProject, deleteProjectWithReports}) {
+export default function TwoActionsDialog({open, setOpen, title, description, action1, action2}) {
     const handleClose = () => {
         setOpen(false);
     };
@@ -20,17 +20,19 @@ export default function DeleteDialog({open, setOpen, deleteProject, deleteProjec
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Eliminazione progetto"}
+                    {title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Attenzione, stai per eliminare un progetto. Desideri rimuovere anche gli eventuali report collegati ad esso o preferisci mantenerli?
+                        {description}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={deleteProjectWithReports}>Rimuovi anche i report collegati</Button>
-                    <Button onClick={deleteProject} autoFocus>
-                        Mantieni i report collegati
+                    <Button onClick={action2.action}>
+                        {action2.text}
+                    </Button>
+                    <Button onClick={action1.action} autoFocus>
+                        {action1.text}
                     </Button>
                 </DialogActions>
             </Dialog>
