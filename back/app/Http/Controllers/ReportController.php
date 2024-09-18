@@ -79,6 +79,17 @@ class ReportController extends Controller
 
     }
 
+    public function getLast()
+    {
+        return Response::response(
+            Report::query()
+                ->where('user_id', \Auth::user()->id)
+                ->with(['project'])
+                ->orderBy('updated_at', 'desc')
+                ->first()
+        );
+    }
+
     public function showAllFromProject(int $projectId, Request $request)
     {
         $page = $request->get("page") ?? 1;

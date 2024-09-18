@@ -66,6 +66,17 @@ class ProjectController extends Controller
         );
     }
 
+    public function getLast()
+    {
+        return Response::response(
+            Project::query()
+                ->where('user_id', \Auth::user()->id)
+                ->with(['reports'])
+                ->orderBy('updated_at', 'desc')
+                ->first()
+        );
+    }
+
     public function showAllConnectableReports(Request $request)
     {
         $page = $request->get("page") ?? 0;

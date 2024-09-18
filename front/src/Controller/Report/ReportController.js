@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 const useReport = () => {
     const [reports, setReports] = useState(null);
+    const [lastReport, setLastReport] = useState(null);
     const [reportDetails, setReportDetails] = useState(null);
     const navigate = useNavigate();
     const newReport = (data) => {
@@ -25,6 +26,16 @@ const useReport = () => {
             withXSRFToken: true
         })
             .then(r => setReports(r.data))
+            .catch(err => console.error(err.message))
+            .finally(endLoad);
+    }
+
+    const getLastReport = () => {
+        axios.get(`http://api.scheck.test/api/report/getlast`, {
+            withCredentials: true,
+            withXSRFToken: true
+        })
+            .then(r => setLastReport(r.data.result))
             .catch(err => console.error(err.message))
             .finally(endLoad);
     }
@@ -96,7 +107,7 @@ const useReport = () => {
             .finally(endLoad);
     }
 
-    return { reports, reportDetails, getAll, connect, disconnect,getReportDetails, newReport, editReport, deleteReport };
+    return { reports, reportDetails, getAll, connect, disconnect,getReportDetails, newReport, editReport, deleteReport, getLastReport, lastReport };
 };
 
 export default useReport;
