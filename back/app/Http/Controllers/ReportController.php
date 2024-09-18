@@ -36,6 +36,32 @@ class ReportController extends Controller
             'project_id' =>$request->project_id
         ]);
 
+
+        if($request->project_id) {
+            $existingElements = [];
+
+            /** @var Report $report */
+            foreach ($project->reports as $projectReport) {
+                foreach ($projectReport->elementValues as $elementValue) {
+                    $existingElements[$elementValue->element_id] = $elementValue;
+                }
+            }
+
+            /** @var ElementValue $elementValue */
+            foreach ($existingElements as $elementValue) {
+                ElementValue::create([
+                    'element_id' => $elementValue->element_id,
+                    'report_id' => $report->id,
+                    'correlation_level' => $elementValue->correlation_level,
+                    'magnitude' => 10
+                ]);
+            }
+        }
+
+
+
+
+
         return Response::response($report);
     }
 
