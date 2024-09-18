@@ -18,7 +18,13 @@ const Reports = () => {
         if(itemsPerPage !== null) {
             getAll(currentPage, itemsPerPage, searchText);
         }
-    }, [currentPage, itemsPerPage, searchText]);
+    }, [currentPage, itemsPerPage]);
+
+    useEffect(() => {
+        if(itemsPerPage !== null) {
+            setCurrentPage(prev => prev === 1 ? 0 : 1);
+        }
+    }, [searchText]);
 
     useEffect(() => {
         const updateItemsPerPage = () => {

@@ -30,10 +30,8 @@ const Reports = () => {
 
     useEffect(() => {
         if(itemsPerPage !== null) {
-            setCurrentPageConnectable(1);
-            setCurrentPageConnected(1);
-            getReportsFromProject(id, currentPageConnected, itemsPerPage, searchText);
-            getConnectableReports(currentPageConnected, itemsPerPage, searchText);
+            setCurrentPageConnectable(prev => prev === 1 ? 0 : 1);
+            setCurrentPageConnected(prev => prev === 1 ? 0 : 1);
         }
 
     }, [searchText]);
