@@ -22,8 +22,8 @@ function App() {
             <AuthProvider>
                 <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
                     <Route element={<PrivateRoute />}>
+                        <Route index element={<Home />} />
                         <Route path="reports" element={<Reports />} />
                         <Route path="reports/new" element={<NewReport />} />
                         <Route path="reports/new/:projectid" element={<NewReport />} />
