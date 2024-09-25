@@ -33,7 +33,7 @@ const SelectElement = ({setParentId, elements, element}) => {
 
                 } else {
                     setValue(newValue);
-                    setParentId({id: newValue.id, name: newValue.name});
+                    setParentId({id: newValue?.id, name: newValue?.name});
                 }
             }}
             filterOptions={(options, params) => {

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { endLoad, startLoad } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import {getApiUrl} from "../../utils/api";
 
 const useProject = () => {
     const [projects, setProjects] = useState(null);
@@ -12,7 +13,7 @@ const useProject = () => {
     const navigate = useNavigate();
 
     const newProject = (data) => {
-        return axios.post("http://api.scheck.test/api/project/new", data, {
+        return axios.post(getApiUrl("/project/new"), data, {
             withCredentials: true,
             withXSRFToken: true
         }).catch(err => console.error(err.message));
@@ -21,8 +22,8 @@ const useProject = () => {
     const getAllProjects = (page=1, count=9, text=null) => {
         startLoad();
         let url = text === null ?
-            `http://api.scheck.test/api/project/get?page=${page}&count=${count}` :
-            `http://api.scheck.test/api/project/get?page=${page}&count=${count}&text=${text}`;
+            getApiUrl(`/project/get?page=${page}&count=${count}`) :
+            getApiUrl(`/project/get?page=${page}&count=${count}&text=${text}`);
         axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
@@ -34,7 +35,7 @@ const useProject = () => {
 
     const getLastProject = () => {
         startLoad();
-        axios.get(`http://api.scheck.test/api/project/getlast`, {
+        axios.get(getApiUrl(`/project/getlast`), {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -46,8 +47,8 @@ const useProject = () => {
     const getReportsFromProject = (id, page=1, count=9, text=null) => {
         startLoad();
         let url = text === null ?
-            `http://api.scheck.test/api/project/get/${id}?page=${page}&count=${count}` :
-            `http://api.scheck.test/api/project/get/${id}?page=${page}&count=${count}&text=${text}`;
+            getApiUrl(`/project/get/${id}?page=${page}&count=${count}`) :
+            getApiUrl(`/project/get/${id}?page=${page}&count=${count}&text=${text}`);
         return axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
@@ -62,8 +63,8 @@ const useProject = () => {
     const getConnectableReports = (page=1, count=9, text=null) => {
         startLoad();
         let url = text === null ?
-            `http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}` :
-            `http://api.scheck.test/api/project/getConnectable?page=${page}&count=${count}&text=${text}`;
+            getApiUrl(`/project/getConnectable?page=${page}&count=${count}`) :
+            getApiUrl(`/project/getConnectable?page=${page}&count=${count}&text=${text}`);
         return axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
@@ -78,7 +79,7 @@ const useProject = () => {
 
     const getProjectResult = (id) => {
 
-        return axios.get(`http://api.scheck.test/api/project/getProjectResult/${id}`, {
+        return axios.get(getApiUrl(`/project/getProjectResult/${id}`), {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -93,7 +94,7 @@ const useProject = () => {
 
     const editProject = (data) => {
         startLoad();
-        return axios.post("http://api.scheck.test/api/project/edit", data, {
+        return axios.post(getApiUrl("/project/edit"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -103,7 +104,7 @@ const useProject = () => {
 
     const deleteProject = (data) => {
         startLoad();
-        return axios.post("http://api.scheck.test/api/project/delete", data, {
+        return axios.post(getApiUrl("/project/delete"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -113,7 +114,7 @@ const useProject = () => {
 
     const deleteProjectWithReports = (data) => {
         startLoad();
-        return axios.post("http://api.scheck.test/api/project/deletereports", data, {
+        return axios.post(getApiUrl("/project/deletereports"), data, {
             withCredentials: true,
             withXSRFToken: true
         })

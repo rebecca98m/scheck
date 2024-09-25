@@ -1,6 +1,7 @@
 import axios, {get} from "axios";
 import {useState} from "react";
 import {endLoad, startLoad} from "../../utils/utils";
+import {getApiUrl} from "../../utils/api";
 
 const useElement = () => {
     const [elements, setElements] = useState(null);
@@ -10,7 +11,7 @@ const useElement = () => {
         data = {
             name: data
         }
-        const response = axios.post("http://api.scheck.test/api/element/new", data, {
+        const response = axios.post(getApiUrl("/element/new"), data, {
             withCredentials: true,
             withXSRFToken: true
         }).catch(err => console.error(err.message))
@@ -22,7 +23,7 @@ const useElement = () => {
 
     const getAll = () => {
         startLoad();
-        axios.get("http://api.scheck.test/api/element/get", {
+        axios.get(getApiUrl("/element/get"), {
             withCredentials: true,
             withXSRFToken: true
         })

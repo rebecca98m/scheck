@@ -55,17 +55,6 @@ const NewReport = () => {
                     Un report è un documento che raccoglie e analizza dati specifici relativi a un opera in un determinato ambiente.
                     L'impatto del report verrà calcolato tramite il metodo Battelle, che valuta l'effetto delle variabili su criteri chiave.
                 </Typography>
-                {
-                    projectid ?
-                        <Typography variant="h6" sx={{mb:2}}>
-                            Questo report verrà aggiunto al progetto [TITOLO PROGETTO].
-                        </Typography>
-                        :
-                        <Typography variant="h6" sx={{mb:2}}>
-                            Questo report potrà essere collegato a un progetto.
-                        </Typography>
-
-                }
 
 
                 <ErrorAlert openAlert={openAlert} setOpenAlert={setOpenAlert}>

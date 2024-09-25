@@ -2,6 +2,7 @@ import {useContext, createContext, useState, useEffect} from "react";
 import {useNavigate, useNavigation} from "react-router-dom";
 import axios, {get} from "axios";
 import {endLoad, startLoad} from "../../utils/utils";
+import {getApiUrl, getSanctumUrl} from "../../utils/api";
 
 const AuthContext = createContext(1);
 
@@ -16,12 +17,12 @@ const AuthProvider = ({children}) => {
 
     const loginAction = (data) => {
         startLoad();
-        return axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
+        return axios.get(getSanctumUrl('/sanctum/csrf-cookie'), {
             withCredentials: true,
             withXSRFToken: true
         })
             .then(response => {
-                return axios.post("http://api.scheck.test/api/login", data, {
+                return axios.post(getApiUrl("/login"), data, {
                     withCredentials: true,
                     withXSRFToken: true
                 })
@@ -40,7 +41,7 @@ const AuthProvider = ({children}) => {
     };
 
     const logOut = () => {
-        axios.post("http://api.scheck.test/api/logout", {}, {
+        axios.post(getApiUrl("/logout"), {}, {
             withCredentials: true,
             withXSRFToken: true
         }).then(r => {
@@ -51,7 +52,7 @@ const AuthProvider = ({children}) => {
     };
 
     const getUserData = () => {
-        axios.get("http://api.scheck.test/api/me", {
+        axios.get(getApiUrl("/me"), {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -70,12 +71,12 @@ const AuthProvider = ({children}) => {
 
     const signup = (data) => {
         startLoad();
-        return axios.get('http://api.scheck.test/sanctum/csrf-cookie', {
+        return axios.get(getSanctumUrl('/sanctum/csrf-cookie'), {
             withCredentials: true,
             withXSRFToken: true
         })
             .then(response => {
-                return axios.post("http://api.scheck.test/api/register", data, {
+                return axios.post(getApiUrl("/register"), data, {
                     withCredentials: true,
                     withXSRFToken: true
                 })

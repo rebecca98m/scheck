@@ -2,6 +2,7 @@ import axios, {get} from "axios";
 import {useState} from "react";
 import {endLoad, startLoad} from "../../utils/utils";
 import {useNavigate} from "react-router-dom";
+import {getApiUrl} from "../../utils/api";
 
 const useReport = () => {
     const [reports, setReports] = useState(null);
@@ -9,7 +10,7 @@ const useReport = () => {
     const [reportDetails, setReportDetails] = useState(null);
     const navigate = useNavigate();
     const newReport = (data) => {
-        return axios.post("http://api.scheck.test/api/report/new", data, {
+        return axios.post(getApiUrl("/report/new"), data, {
             withCredentials: true,
             withXSRFToken: true
         }).catch(err => console.error(err.message));
@@ -19,8 +20,8 @@ const useReport = () => {
     const getAll = (page=0, count=9, text=null) => {
         startLoad();
         let url = text === null ?
-            `http://api.scheck.test/api/report/get?page=${page}&count=${count}` :
-            `http://api.scheck.test/api/report/get?page=${page}&count=${count}&text=${text}`;
+            getApiUrl(`/report/get?page=${page}&count=${count}`) :
+            getApiUrl(`/report/get?page=${page}&count=${count}&text=${text}`);
         axios.get(url, {
             withCredentials: true,
             withXSRFToken: true
@@ -32,7 +33,7 @@ const useReport = () => {
 
     const getLastReport = () => {
         startLoad();
-        axios.get(`http://api.scheck.test/api/report/getlast`, {
+        axios.get(getApiUrl(`/report/getlast`), {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -47,7 +48,7 @@ const useReport = () => {
             'report_id': idReport,
             'project_id': idProject,
         }
-        return axios.post("http://api.scheck.test/api/report/connect", data, {
+        return axios.post(getApiUrl("/report/connect"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -62,7 +63,7 @@ const useReport = () => {
             'report_id': idReport,
             'project_id': idProject,
         }
-        return axios.post("http://api.scheck.test/api/report/disconnect", data, {
+        return axios.post(getApiUrl("/report/disconnect"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -73,7 +74,7 @@ const useReport = () => {
 
     const getReportDetails = (id) => {
         startLoad();
-        return axios.get("http://api.scheck.test/api/report/get/" + id, {
+        return axios.get(getApiUrl("/report/get/") + id, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -90,7 +91,7 @@ const useReport = () => {
 
     const editReport = (data) => {
         startLoad();
-        return axios.post("http://api.scheck.test/api/report/edit", data, {
+        return axios.post(getApiUrl("/report/edit"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
@@ -100,7 +101,7 @@ const useReport = () => {
 
     const deleteReport = (data) => {
         startLoad();
-        return axios.post("http://api.scheck.test/api/report/delete", data, {
+        return axios.post(getApiUrl("/report/delete"), data, {
             withCredentials: true,
             withXSRFToken: true
         })
