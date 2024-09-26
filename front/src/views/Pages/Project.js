@@ -151,7 +151,7 @@ const Reports = () => {
     }
 
     function handleProjectResult() {
-        if(project.reports.data && project.reports.data.length > 0) {
+        if(project.reports.data && project.reports.data.length > 1) {
             startLoad();
             getProjectResult(id).then(
                 (r) => {
@@ -164,7 +164,13 @@ const Reports = () => {
             ).finally(endLoad);
         }
         else {
-            setTextAlert("Non ci sono report in questo progetto. Aggiungi dei report per poterne calcolare l'impatto.")
+            if(project.reports.data.length == 1) {
+                setTextAlert("C'è solo un report in questo progetto, devono esserci almeno due report per poter calcolare l'impatto. Aggiungi dei report con il pulsante in basso a destra.")
+            }
+            else {
+                setTextAlert("Non ci sono report in questo progetto, devono esserci almeno due report per poter calcolare l'impatto. Aggiungi dei report con il pulsante in basso a destra.")
+            }
+
             setOpenAlert(true);
         }
 
